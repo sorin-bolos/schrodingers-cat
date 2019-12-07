@@ -11,8 +11,7 @@ var config = {
         }
     },
     scene: {
-        preload: preload,
-        create: create
+        preload, init, create, update
     }
 };
 
@@ -20,30 +19,101 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.setBaseURL('http://labs.phaser.io');
+    // this maps to files in /dist/assets
+    this.load.setBaseURL('/assets');
 
-    this.load.image('sky', 'assets/skies/space3.png');
-    this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-    this.load.image('red', 'assets/particles/red.png');
+    this.load.image('box', 'temp-box.png');
+    this.load.spritesheet('cat', 'temp-cat.png', { frameWidth: 50, frameHeight: 50 });
+}
+
+export function toggleFullscreen() {
+    // in fullscreen mode stretch to fill
+
+    if (game.scale.isFullScreen)
+    {
+        game.scale.stopFullscreen();
+    }
+    else
+    {
+        game.scale.startFullscreen(false);
+    }
+}
+
+var player, cursors, boxes;
+
+function init(){
+    
+}
+
+function createPlatform(staticGroup, x, y, endX)
+{
+    for(let i=x; i<=endX; i+=50){
+        staticGroup.create(i,y,'box');
+    }
 }
 
 function create ()
 {
-    this.add.image(400, 300, 'sky');
+    // static objects that don't move
+    boxes = this.physics.add.staticGroup();
 
-    var particles = this.add.particles('red');
+    createPlatform(boxes, 0,600,800);
+    createPlatform(boxes, 100,400,500);
+    createPlatform(boxes, 600,500,800);
 
-    var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
+    //  arrow keys input
+    cursors = this.input.keyboard.createCursorKeys();
+
+    player = this.physics.add.sprite(100, 450, 'cat');
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+    this.physics.add.collider(player, boxes);
+
+    this.anims.create({
+        key: 'cat_left',
+        frames: this.anims.generateFrameNumbers('cat', { start: 0, end: 1 }),
+        frameRate: 10,
+        repeat: -1
     });
 
-    var logo = this.physics.add.image(400, 100, 'logo');
+    this.anims.create({
+        key: 'cat_wait',
+        frames: [ { key: 'cat', frame: 2 } ],
+        frameRate: 20
+    });
 
-    logo.setVelocity(100, 400);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
+    this.anims.create({
+        key: 'cat_right',
+        frames: this.anims.generateFrameNumbers('cat', { start: 3, end: 4 }),
+        frameRate: 10,
+        repeat: -1
+    });
 
-    emitter.startFollow(logo);
+}
+
+function update ()
+{
+    if (cursors.left.isDown)
+    {
+        player.setVelocityX(-160);
+
+        player.anims.play('cat_left', true);
+    }
+    else if (cursors.right.isDown)
+    {
+        player.setVelocityX(160);
+
+        player.anims.play('cat_right', true);
+    }
+    else
+    {
+        player.setVelocityX(0);
+
+        player.anims.play('cat_wait');
+    }
+
+    if (cursors.up.isDown && player.body.touching.down)
+    {
+        player.setVelocityY(-330);
+    }
 }

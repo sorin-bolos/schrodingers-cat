@@ -1,6 +1,9 @@
 
-async function startGame(){
+async function initializeGame(){
     const game = await import('./game');
+
+    document.querySelector("#fullscreenButton").addEventListener('click', () => game.toggleFullscreen());
 }
 
-startGame();
+
+initializeGame();
