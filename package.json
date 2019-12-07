@@ -2,16 +2,22 @@
   "name": "schrodingerscat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "dependencies": {
     "mathjs": "^6.2.5",
     "phaser": "^3.21.0"
   },
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --watch ./src/**/*.test.js",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open --contentBase ./dist",
+    "build": "webpack --mode=\"production\""
   },
   "author": "",
   "license": "ISC"
