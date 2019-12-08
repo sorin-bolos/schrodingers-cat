@@ -37,7 +37,7 @@ class InstantSimulator {
     }
 
     CNOT(contrloKet, targetKet) {
-        let tensor = contrloKet.tensor(tarhetKet);
+        let tensor = contrloKet.tensor(targetKet);
         return this.apply(o.CNOT, tensor);
     }
 }

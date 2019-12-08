@@ -23,7 +23,6 @@ class Ket {
     }
 
     tensor(otherKet) {
-        console.log(typeof new math.complex(9))
         let tensored = this.amplitudes.map(a => otherKet.amplitudes.map(b => math.multiply(a, b)))
                                       .reduce((v1, v2) => v1.concat(v2));
         return new Ket(tensored);
