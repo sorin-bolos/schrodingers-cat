@@ -4,7 +4,7 @@ const PRECISION = 3;
 class Ket {
     constructor(_amplitudes) {
         let vector = _amplitudes.map(a => typeof a == 'number' ? a.toFixed(PRECISION) : a)
-                                .map(a => new math.complex(a))
+                                .map(a => new math.complex(a));
 
         if (!this.isUnitary(vector))
             throw `Ket must be unitary (${vector})`;
