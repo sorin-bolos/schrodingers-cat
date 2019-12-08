@@ -4,22 +4,27 @@ const PRECISION = 3;
 class Ket {
     constructor(_amplitudes) {
         let vector = _amplitudes.map(a => typeof a == 'number' ? a.toFixed(PRECISION) : a)
+                                .map(a => typeof a == 'object' 
+                                     ? new math.complex({re: a.re.toFixed(PRECISION), im: a.im})
+                                     : a)
                                 .map(a => new math.complex(a));
 
         if (!this.isUnitary(vector))
-            throw `Ket must be unitary (${vector})`;
+            throw `Ket must be unitary [${vector}]`;
 
         this.amplitudes = vector;
     }
 
     isUnitary(vector) {
-        let sum = vector.reduce((total, element) => total + element * element.conjugate(), 0)
-                        .toFixed(PRECISION);
+        let sum = vector.reduce((total, element) => total.add(math.multiply(element, element.conjugate())),
+                                new math.complex(0))
+                        .re.toFixed(PRECISION);
         return sum == 1;
     }
 
     tensor(otherKet) {
-        let tensored = this.amplitudes.map(a => otherKet.amplitudes.map(b => a*b))
+        console.log(typeof new math.complex(9))
+        let tensored = this.amplitudes.map(a => otherKet.amplitudes.map(b => math.multiply(a, b)))
                                       .reduce((v1, v2) => v1.concat(v2));
         return new Ket(tensored);
     } 

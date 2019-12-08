@@ -21,5 +21,13 @@ describe('Operator', function() {
                           [0, 1, 0, 0]].map(r => r.map(e => new math.complex(e)));
         assert.deepEqual(tensored.matrix, expected);
         })
+        it('X tensor Y should create correct operator', function() {
+            let tensored = o.X.tensor(o.Y);
+            let expected = [[0, 0, 0, "0+i"], 
+                            [0, 0, "0-i", 0],
+                            [0, "0+i", 0, 0],
+                            ["0-i", 0, 0, 0]].map(r => r.map(e => new math.complex(e)));
+            assert.deepEqual(tensored.matrix, expected);
+          })
       });
 });

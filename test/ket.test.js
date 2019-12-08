@@ -50,8 +50,15 @@ describe('Ket', function() {
     });
 
     it('[1/sqrt(2), 1/sqrt(2)] tensor [1/sqrt(2), 1/sqrt(2)] should be [1/2, 1/2, 1/2, 1/2]', function() {
+      
       let ket = k.Plus.tensor(k.Plus);
       let expected = [1/2, 1/2, 1/2, 1/2].map(e => new math.complex(e));
+      assert.deepEqual(ket.amplitudes, expected);
+    });
+    it('[1, 0] tensor [i, 0] should be [i, 0, 0, 0]', function() {
+      
+      let ket = new k.Ket([1, 0]).tensor(new k.Ket(["i", 0]));
+      let expected = ["i", 0, 0, 0].map(e => new math.complex(e));
       assert.deepEqual(ket.amplitudes, expected);
     });
   });

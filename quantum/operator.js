@@ -1,5 +1,5 @@
 const math = require('mathjs')
-const k = require('./ket')
+
 
 class Operator {
     constructor(_elements) {
@@ -22,21 +22,12 @@ class Operator {
             for (let j = 0; j < size; j++) {
                 for (let s = 0; s < otherSize; s++) {
                     for (let t = 0; t < size; t++) {
-                        tensored[i*otherSize + s][j*otherSize + t] = this.matrix[i][j] * otherOperator.matrix[s][t];
+                        tensored[i*otherSize + s][j*otherSize + t] = math.multiply(this.matrix[i][j],otherOperator.matrix[s][t]);
                     }
                 }
             }
         }
         return new Operator(tensored);
-    } 
-
-    apply(ket) {
-        let size = math.size(ket.amplitudes);
-        if (size != math.size(this.matrix)[0])
-            throw `Cannot apply operator of size ${math.size(this.matrix)[0]} to ket of size ${size}`;
-
-        let newElements = math.multiply(this.matrix, ket.amplitudes);
-        return new k.Ket(newElements);
     }
 }
 
@@ -44,11 +35,18 @@ const I = new Operator([[1, 0], [0, 1]]);
 const X = new Operator([[0, 1], [1, 0]]);
 const Y = new Operator([[0, "0+i"], ["0-i", 0]]);
 const Z = new Operator([[1, 0], [0, -1]]);
+const H = new Operator([[1/math.sqrt(2), 1/math.sqrt(2)], [1/math.sqrt(2), -1/math.sqrt(2)]]);
+const CNOT = new Operator([[1, 0, 0, 0],
+                           [0, 1, 0, 0],
+                           [0, 0, 0, 1],
+                           [0, 0, 1, 0]]);
 
 module.exports = {
     Operator,
     I,
     X,
     Y,
-    Z
+    Z,
+    H,
+    CNOT
 }
