@@ -1,11 +1,33 @@
 import Phaser from 'phaser';
-import { MyScene } from './MyScene';
+import { TestLevel } from './levels/TestLevel';
 
+let currentLevel = null;
 let game = null;
-let levelClass = null;
 
 export function startTheGameAlready(parentElement){
-    game = new Phaser.Game({
+    game = createPhasorGame(parentElement);
+    startLevel(TestLevel);
+}
+
+export function restartLevel(){
+    game.scene.remove("level");
+    game.scene.add("level", currentLevel, true);
+}
+
+function startLevel(LevelClass){
+    currentLevel = LevelClass;
+    restartLevel();
+}
+
+export function toggleFullscreen() {
+    game.scale.isFullScreen 
+        ? game.scale.stopFullscreen()
+        : game.scale.startFullscreen(false)
+        ;
+}
+
+function createPhasorGame(parentElement){
+    return new Phaser.Game({
         type: Phaser.AUTO,
         width: 960,
         height: 540,
@@ -17,27 +39,5 @@ export function startTheGameAlready(parentElement){
             default: 'arcade',
         }
     });
-    levelClass = MyScene;
-    startLevel(levelClass);
-}
-
-export function toggleFullscreen() {
-    if (game.scale.isFullScreen)
-    {
-        game.scale.stopFullscreen();
-    }
-    else
-    {
-        game.scale.startFullscreen(false);
-    }
-}
-
-export function restartLevel(){
-    startLevel(levelClass);
-}
-
-function startLevel(TLevel){
-    game.scene.remove("level");
-    game.scene.add("level", TLevel, true);
 }
 
