@@ -1,0 +1,18 @@
+{
+    "numberOfQubits":"2",
+    "initialState":[0, 0, 0, "0-1.j"],
+    "gates": [
+        {
+            "gate" : "H",
+            "params": [0]
+        },
+        {
+            "gate": "CNOT",
+            "params": [0, 1]
+        },
+        {
+            "gate": "M",
+            "params": [0, 1]
+        }
+    ]
+}
