@@ -11,5 +11,7 @@ export class TestLevel extends LevelBase
         
         this.addCat(100,450);
         this.addCat(200,100);
+        this.addGateT(300,200);
+        this.addGateH(700,200);
     }
 }

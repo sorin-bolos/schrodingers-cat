@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { preloadGameAssets, createGameAnimations, boxSprite, catSprite, catLeftAnim, catRightAnim, catIdleAnim } from './assets';
+import { preloadGameAssets, createGameAnimations, boxSprite, catSprite, catLeftAnim, catRightAnim, catIdleAnim, gateImages } from './assets';
 
 export class LevelBase extends Phaser.Scene {
 
@@ -18,6 +18,30 @@ export class LevelBase extends Phaser.Scene {
         this.physics.add.collider(cat, this.cats);
         this.cats.push(cat);
     }
+    
+    addGateT(x,y){
+        this._addGateGeneric(x, y, gateImages.T, 'T');
+    }
+
+    addGateH(x,y){
+        this._addGateGeneric(x, y, gateImages.H, 'H');
+    }
+
+    _addGateGeneric(x,y,image,type){
+        const gate = this.physics.add.sprite(x,y, image);
+        gate.setCollideWorldBounds(true);
+        this.physics.add.collider(gate, this.boxes);
+        this.physics.add.overlap(gate, this.cats, (gate, cat) => this._collectGate(gate, type), null, this);
+    }
+
+    _collectGate(gate, type){
+        gate.disableBody(true, true);
+        this.collectedGates.push({
+            gate: type,
+            params: [this.catControlIndex],
+        })
+        console.log(this.collectedGates);
+    }
 
     preload() {
         preloadGameAssets(this.load);
@@ -26,6 +50,7 @@ export class LevelBase extends Phaser.Scene {
     create() {
         createGameAnimations(this.anims);
         this.cats = [];
+        this.collectedGates = [];
         this.catControlIndex = 0;
 
         // static objects that don't move
