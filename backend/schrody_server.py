@@ -3,8 +3,10 @@ from qiskit import Aer, execute
 
 from flask import Flask
 from flask_restful import Resource, Api, fields, marshal_with, reqparse
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 resource_fields = {
@@ -60,6 +62,7 @@ def complexToString(complex):
 class StateVectorSimulation(Resource):
     def post(self):
         data = parser.parse_args()
+        print(data)
         statevector = applyGates(data)
         return {outputState : [complexToString(c) for c in statevector.tolist()]}
 
