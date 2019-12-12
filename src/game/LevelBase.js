@@ -3,20 +3,31 @@ import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catA
 
 export class LevelBase extends Phaser.Scene {
 
-    addPlatform(x, y, endX) {
-        for (let i = x; i <= endX; i += 50) {
-            this.platforms.create(i, y, boxSprite);
+    addPlatform(cell_x, cell_y, x_count = 1, y_count = 1) {
+        for (let y=0; y<y_count; y++){
+            for (let x=0; x<x_count; x++){
+                this.platforms.create(
+                    this._cellXToWorldX(cell_x + x), 
+                    this._cellYToWorldY(cell_y + y), 
+                    boxSprite);
+            }
         }
     }    
 
-    addCat(x,y){
-        const cat = this.physics.add.sprite(x, y, catAtlasImage, "cat_default");
+    addCat(cell_x, cell_y){
+        const cat = this.physics.add.sprite(
+            this._cellXToWorldX(cell_x), 
+            this._cellYToWorldY(cell_y),
+            catAtlasImage, 
+            "cat_default");
+
         cat.setScale(.5,.5);
         cat.setSize(90,70);
         cat.setOffset(51,70);
         cat.setBounce(0.2);
         cat.setCollideWorldBounds(true);
         cat.play(catAnim.idle);
+
         this.physics.add.collider(cat, this.platforms);
         this.physics.add.collider(cat, this.cats);
         this.cats.push(cat);
@@ -30,8 +41,11 @@ export class LevelBase extends Phaser.Scene {
         this._addGateGeneric(x, y, gateImages.H, 'H');
     }
 
-    _addGateGeneric(x,y,image,type){
-        const gate = this.physics.add.sprite(x,y, image);
+    _addGateGeneric(cell_x,cell_y,image,type){
+        const gate = this.physics.add.sprite(
+            this._cellXToWorldX(cell_x), 
+            this._cellYToWorldY(cell_y),
+            image);
         gate.setCollideWorldBounds(true);
         gate.setScale(.5,.5);
         gate.setSize(50,50);
@@ -65,9 +79,11 @@ export class LevelBase extends Phaser.Scene {
         
         this.worldCenterX = 960/2;
         this.worldCenterY = 540/2;
+        this.cellWidth = 50;
+        this.cellHeight = 50;
         this.createBackground();
         // open bacgrkound after timer
-        setTimeout(() => this.openTheBox(), 1000);
+        // setTimeout(() => this.openTheBox(), 1000);
 
         // static objects that don't move
         this.platforms = this.physics.add.staticGroup();
@@ -179,6 +195,14 @@ export class LevelBase extends Phaser.Scene {
             cat.setVelocityX(0);
             cat.play(catAnim.idle);
         }
+    }
+
+    _cellXToWorldX(cell_x){
+        return this.worldCenterX + cell_x * this.cellWidth;
+    }
+
+    _cellYToWorldY(cell_y){
+        return this.worldCenterY + cell_y * this.cellHeight;
     }
 }
 

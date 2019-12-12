@@ -4,14 +4,23 @@ export class TestLevel extends LevelBase
 {
     create(){
         super.create();
+
+        // level floor
+        this.addPlatform(-10, 5, 20);
+
+        // additional platforms
+        this.addPlatform(3, 3, 4);
+        this.addPlatform(-5, 1, 8);
+        this.addPlatform(-9, -1, 3);
+        this.addPlatform(7, -1, 3);
+        this.addPlatform(-5, -3, 10);
+
+        // walls 
+        this.addPlatform(-9, -1, 1, 10);
         
-        this.addPlatform(0, 500, 800);
-        this.addPlatform(100, 300, 500);
-        this.addPlatform(600, 400, 800);
-        
-        this.addCat(100,430);
-        this.addCat(200,100);
-        this.addGateT(300,200);
-        this.addGateH(700,200);
+        this.addCat(-1,0);
+        this.addCat(1,2);
+        this.addGateT(-8,-5);
+        this.addGateH(8,-9);
     }
 }
