@@ -65,6 +65,18 @@ export class LevelBase extends Phaser.Scene {
         this._addGateGeneric(x, y, gateImages.Z, 'Z');
     }
 
+    addGateS(x,y){
+        this._addGateGeneric(x, y, gateImages.S, 'S');
+    }
+
+    addGateSdag(x,y){
+        this._addGateGeneric(x, y, gateImages.Sdag, 'Sdg');
+    }
+
+    addGateTdag(x,y){
+        this._addGateGeneric(x, y, gateImages.Tdag, 'Tdg');
+    }
+
     _addGateGeneric(cell_x,cell_y,image,type){
         const gate = this.physics.add.sprite(
             this._cellXToWorldX(cell_x), 
@@ -143,11 +155,12 @@ export class LevelBase extends Phaser.Scene {
     }
 
     createTimerText(){
-        this.timer = this.add.text(960 - 100, 5, '', { fontFamily: 'Roboto', fill: '#25FF1B' });
+        this.timer = this.add.text(820, 20, '', { fontFamily: 'Roboto', fill: '#2c3e50' });
+        this.timer.setFontSize(25);
     }
 
     createStateText(){
-        this.state = this.add.text(this.worldCenterX - 100, 5, '', { fontFamily: 'Roboto', fill: '#2980b9' });
+        this.state = this.add.text(this.worldCenterX - 170, 7, '', { fontFamily: 'Roboto', fill: '#34495e' });
     }
 
     updateStateText(_first, _second){

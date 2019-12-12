@@ -11,6 +11,9 @@ export const gateImages = {
     X: 'x',
     Y: 'y',
     Z: 'z',
+    S: 's',
+    Sdag: 'Sdag',
+    Tdag: 'Tdag',
 };
 
 export const catAtlasImage = "cat_atlas_image";
@@ -40,6 +43,9 @@ export function preloadGameAssets(load){
     load.image(gateImages.X, 'x.png');
     load.image(gateImages.Y, 'y.png');
     load.image(gateImages.Z, 'z.png');
+    load.image(gateImages.S, 'S.png');
+    load.image(gateImages.Sdag, 'Sdag.png');
+    load.image(gateImages.Tdag, 'Tdag.png');
     load.atlas(catAtlasImage, 'cat-atlas.png', 'cat-atlas.json');
 
     // background
