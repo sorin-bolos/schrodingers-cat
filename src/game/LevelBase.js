@@ -181,14 +181,15 @@ export class LevelBase extends Phaser.Scene {
             }
         }
         for(let i=0; i<this.cats.length; i++){
-            const catSprite = this.cats[i].sprite;
-            (i == this.catControlIndex && !this.boxHasBeenOpened)
-                ? this._updateControlledCatSprite(catSprite)
-                : this._updatePassiveCatSprite(catSprite);
+            const cat = this.cats[i];
+            (i == this.catControlIndex && !this.boxHasBeenOpened && cat.alive)
+                ? this._updateControlledCat(cat)
+                : this._updatePassiveCat(cat);
         }
     }
 
-    _updateControlledCatSprite(sprite){
+    _updateControlledCat(cat){
+        const sprite = cat.sprite;
         const catSpeed = 300;
         const catJumpStrength = 330;
         const grounded = sprite.body.touching.down;
@@ -227,10 +228,15 @@ export class LevelBase extends Phaser.Scene {
         }
     }
 
-    _updatePassiveCatSprite(sprite){
+    _updatePassiveCat(cat){
+        const sprite = cat.sprite;
         if (sprite.body.touching.down){
             sprite.setVelocityX(0);
             sprite.play(catAnim.idle);
+        }
+        if (!cat.alive){
+            sprite.setFlipY(true);
+            sprite.setOffset(0,40);
         }
     }
 
