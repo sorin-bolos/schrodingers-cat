@@ -17,7 +17,13 @@ export const catAnim = {
     run : "cat_anim_run",
     jump: "cat_anim_jump",
     fall: "cat_anim_fall"
-}
+};
+
+export const backgroundImageStatic = "background_image_static";
+export const backgroundSchrodinger = "background_schrodinger";
+export const backgroundOpenAnim = "background_open_anim";
+
+let openAnimationImages;
 
 export function preloadGameAssets(load){
     load.setBaseURL(baseURL);
@@ -29,6 +35,13 @@ export function preloadGameAssets(load){
     load.image(gateImages.T, 'gate-t.png');
     load.image(gateImages.H, 'gate-h.png');
     load.atlas(catAtlasImage, 'cat-atlas.png', 'cat-atlas.json');
+
+    // background
+
+    load.image(backgroundImageStatic, 'background/Background.png');
+    load.image(backgroundSchrodinger, 'background/schrodinger.png');
+    openAnimationImages = [...Array(14).keys()].map(i => `background/BackgroundOpen${i+1}.png`);
+    openAnimationImages.forEach(img => load.image(img, img));
 }
 
 export function createGameAnimations(anims){
@@ -51,6 +64,13 @@ export function createGameAnimations(anims){
         frames: anims.generateFrameNames(catAtlasImage, { prefix: 'cat_jump', start:1, end: 6, }),
         frameRate: 15,
         repeat: 1,
-        repeatDelay:2000
+        repeatDelay:4000
     });
+    anims.create({
+        key: backgroundOpenAnim, 
+        frames: openAnimationImages.map(img => { return { key:img }}),
+        framerate: 12,
+        repeat: 0,
+        repeatDelay: 1000
+    })
 }

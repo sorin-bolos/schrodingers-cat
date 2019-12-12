@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages } from './assets';
+import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages, backgroundImageStatic, backgroundOpenAnim, backgroundSchrodinger } from './assets';
 
 export class LevelBase extends Phaser.Scene {
 
     addPlatform(x, y, endX) {
         for (let i = x; i <= endX; i += 50) {
-            this.boxes.create(i, y, boxSprite);
+            this.platforms.create(i, y, boxSprite);
         }
     }    
 
@@ -17,7 +17,7 @@ export class LevelBase extends Phaser.Scene {
         cat.setBounce(0.2);
         cat.setCollideWorldBounds(true);
         cat.play(catAnim.idle);
-        this.physics.add.collider(cat, this.boxes);
+        this.physics.add.collider(cat, this.platforms);
         this.physics.add.collider(cat, this.cats);
         this.cats.push(cat);
     }
@@ -35,11 +35,14 @@ export class LevelBase extends Phaser.Scene {
         gate.setCollideWorldBounds(true);
         gate.setScale(.5,.5);
         gate.setSize(50,50);
-        this.physics.add.collider(gate, this.boxes);
+        this.physics.add.collider(gate, this.platforms);
         this.physics.add.overlap(gate, this.cats, (gate, cat) => this._collectGate(gate, type), null, this);
     }
 
     _collectGate(gate, type){
+        if (this.boxHasBeenOpened){
+            return;
+        }
         gate.disableBody(true, true);
         this.collectedGates.push({
             gate: type,
@@ -57,8 +60,17 @@ export class LevelBase extends Phaser.Scene {
         this.collectedGates = [];
         this.catControlIndex = 0;
 
+        this.boxHasBeenOpened = false;
+
+        
+        this.worldCenterX = 960/2;
+        this.worldCenterY = 540/2;
+        this.createBackground();
+        // open bacgrkound after timer
+        setTimeout(() => this.openTheBox(), 1000);
+
         // static objects that don't move
-        this.boxes = this.physics.add.staticGroup();
+        this.platforms = this.physics.add.staticGroup();
         
         this.physics.world.gravity.set(0,500);
 
@@ -66,6 +78,46 @@ export class LevelBase extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         console.log(this);
+    }
+
+    createBackground(){
+        const schrodinger = this.add.sprite(this.worldCenterX + 100, this.worldCenterY + 400, backgroundSchrodinger);
+        schrodinger.setScale(.3);
+        const sprite = this.add.sprite(this.worldCenterX, this.worldCenterY, backgroundImageStatic);
+        sprite.setScale(.5);
+        this.background = {
+            sprite: sprite,
+            schrodinger, schrodinger,
+        };
+    }
+
+    openTheBox(){
+        this.boxHasBeenOpened = true;
+        this.background.sprite.play(backgroundOpenAnim);
+        this.tweens.add({
+            targets: this.background.schrodinger,
+            scaleX: .9, 
+            scaleY: .9,
+            x: this.worldCenterX,
+            y: this.worldCenterY+200,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            onComplete: () => inspect()
+        });
+
+        const inspect = () => {
+            const scale = Math.random()*.2+.7;
+            this.tweens.add({
+                targets: this.background.schrodinger,
+                scaleX: scale, 
+                scaleY: scale,
+                x: this.worldCenterX + Math.random()*300 - 150,
+                y: this.worldCenterY+200 + Math.random()*100 - 50,
+                ease: 'Sine.easeInOut',
+                duration: 2000,
+                onComplete: () => inspect()
+            });
+        }
     }
 
     update() {
@@ -77,7 +129,7 @@ export class LevelBase extends Phaser.Scene {
         }
         for(let i=0; i<this.cats.length; i++){
             const cat = this.cats[i];
-            i == this.catControlIndex 
+            (i == this.catControlIndex && !this.boxHasBeenOpened)
                 ? this._updateControlledCat(cat)
                 : this._updatePassiveCat(cat);
         }
@@ -88,7 +140,7 @@ export class LevelBase extends Phaser.Scene {
         const catJumpStrength = 330;
         const grounded = cat.body.touching.down;
         let moving = false;
-
+        
         if (this.cursors.left.isDown) {
             cat.setVelocityX(-catSpeed);
             cat.setFlipX(true);
