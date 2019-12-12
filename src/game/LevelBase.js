@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { QiskitSimulator } from '../quantum/qiskitSimulator';
 import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages, backgroundImageStatic, backgroundOpenAnim, backgroundSchrodinger } from './assets';
+import { setState } from '../sphere/sphere';
 
 const PRECISION = 3;
 
@@ -40,6 +41,8 @@ export class LevelBase extends Phaser.Scene {
         }
 
         this.cats.push(cat);
+
+        this._setLife(cat);
     }
     
     addGateT(x,y){
@@ -88,6 +91,7 @@ export class LevelBase extends Phaser.Scene {
 
     async _beginSimulate(cat, type){
         cat.state = await this.simulator.apply({ name: type}, cat.state);
+        this._setLife(cat);
         cat.state.amplitudes.forEach(element => {
             if (element.toPolar().r.toFixed(PRECISION) == 1)
             {
@@ -120,6 +124,10 @@ export class LevelBase extends Phaser.Scene {
         this.createBackground();
         this.createTimerText();
         this.createStateText();
+
+        //DEBUG
+        //setState(1*-50, 0*50, 0*-50);
+
         // open bacgrkound after timer
         // setTimeout(() => this.openTheBox(), 1000);
 
@@ -139,11 +147,22 @@ export class LevelBase extends Phaser.Scene {
     }
 
     createStateText(){
-        this.state = this.add.text(this.worldCenterX, 5, '', { fontFamily: 'Roboto', fill: '#25FF1B' });
+        this.state = this.add.text(this.worldCenterX - 100, 5, '', { fontFamily: 'Roboto', fill: '#2980b9' });
     }
 
-    updateStateText(first, second){
-        this.state.setText(first + "|0> " + second + "|1> ");
+    updateStateText(_first, _second){
+        const first = _first.clone();
+        const second = _second.clone();
+
+        if (first.re)
+            first.re = parseFloat(first.re).toFixed(3);
+        if (first.im)
+            first.im = parseFloat(first.im).toFixed(3);
+        if (second.re)
+            second.re = parseFloat(second.re).toFixed(3);
+        if (second.im)
+            second.im = parseFloat(second.im).toFixed(3);
+        this.state.setText("[ " + first + " |DEAD> " +"                 "+ second + " |ALIVE> ]");
     }
 
     updateTimerText(timeRemainingInSeconds){
@@ -307,6 +326,14 @@ export class LevelBase extends Phaser.Scene {
 
     _cellYToWorldY(cell_y){
         return this.worldCenterY + cell_y * this.cellHeight;
+    }
+
+    _setLife(cat) {
+        const coordinates = cat.state.sphereCarthesianCoordinates();
+        console.log(coordinates);
+        setState(coordinates.x*-50, coordinates.z*-50, coordinates.y*-50);
+
+        this.updateStateText(cat.state.amplitudes[0], cat.state.amplitudes[1]);
     }
 }
 

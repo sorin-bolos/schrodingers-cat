@@ -5,7 +5,7 @@ export function initSpehere() {
     scene = new THREE.Scene();
 
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
-    camera.position.set(0, 100, 100);
+    camera.position.set(0, 100, 120);
     camera.lookAt(0, 0, 0);
 
     // Renderer
@@ -17,9 +17,8 @@ export function initSpehere() {
         renderer = new THREE.CanvasRenderer({ alpha: true });
     }
 
-    var w = 150;
-    var h = 150;
-    var r = w / h;
+    var w = 200;
+    var h = 200;
     
     renderer.setSize(w.toString(), h.toString());
     document.getElementById("stateSphere").appendChild(renderer.domElement);
@@ -49,13 +48,22 @@ export function initSpehere() {
     var yLine = new THREE.Line(yGeometry, material);
     scene.add(yLine);
 
+    var zAxeStart = -1 * radius - 10;
+    var zGeometry = new THREE.Geometry();
+    zGeometry.vertices.push(new THREE.Vector3(0, zAxeStart, 0));
+    zGeometry.vertices.push(new THREE.Vector3(0, radius, 0));
+    var zLine = new THREE.Line(zGeometry, material);
+    scene.add(zLine);
+
     var loader = new THREE.FontLoader();
     var group = new THREE.Group();
     var xAxisText = "X";
     var yAxisText = "Y";
+    var zAxisText = "Z";
     loader.load('assets/helvetiker_bold.typeface.json', function (font) {
         var xTextGeo = new THREE.TextGeometry(xAxisText, { font: font, size: 10, height: 1, curveSegments: 4, bevelThickness: 1, bevelSize: 0, bevelEnabled: false });
         var yTextGeo = new THREE.TextGeometry(yAxisText, { font: font, size: 10, height: 1, curveSegments: 4, bevelThickness: 1, bevelSize: 0, bevelEnabled: false });
+        var zTextGeo = new THREE.TextGeometry(zAxisText, { font: font, size: 10, height: 1, curveSegments: 4, bevelThickness: 1, bevelSize: 0, bevelEnabled: false });
 
         var textMeshX = new THREE.Mesh(xTextGeo, material);
         textMeshX.position.x = xAxeStart;
@@ -68,6 +76,13 @@ export function initSpehere() {
         textMeshY.position.z = yAxeStart + 10;
         textMeshY.rotation.y = 1.5708;
 
+        var textMeshZ = new THREE.Mesh(zTextGeo, material);
+        textMeshZ.position.x = 0;
+        textMeshZ.position.y = -1 * zAxeStart - 10;
+        textMeshZ.position.z = 0;
+        //textMeshZ.rotation.y = 1.5708;
+
+        group.add(textMeshZ);
         group.add(textMeshX);
         group.add(textMeshY);
         scene.add(group);
@@ -85,8 +100,8 @@ export function initSpehere() {
     animate();
 }
 
-export function setState(x, y, z) {
-    if (!stateLine) {
+ export function setState(x, y, z) {
+    if (stateLine) {
         scene.remove(stateLine);
     }
 

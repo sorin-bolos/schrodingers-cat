@@ -29,8 +29,8 @@ class Ket {
         const polarB = this.amplitudes[1].toPolar();
 
         const aphi = polarB.phi - polarA.phi;
-        const ateta = math.acos(polarA) / 2;
-        const atetaB = math.asin(polarB) / 2
+        const ateta = math.acos(polarA.r) * 2;
+        const atetaB = math.asin(polarB.r) * 2;
 
         if (atetaB.toFixed(PRECISION) == ateta.toFixed(PRECISION))
         {
@@ -48,7 +48,7 @@ class Ket {
     }
 
     sphereCarthesianCoordinates() {
-        const sphereCoord = sphereAngleCoordinates();
+        const sphereCoord = this.sphereAngleCoordinates();
 
         const ax = math.sin(sphereCoord.teta) * math.cos(sphereCoord.phi);
         const ay = math.sin(sphereCoord.teta) * math.sin(sphereCoord.phi);
