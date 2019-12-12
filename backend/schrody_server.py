@@ -51,6 +51,12 @@ def applyGate(circuit, gateString, params):
         circuit.z(params)
     elif (gateString == "H" or gate == "h"):
         circuit.h(params)
+    elif (gateString == "S" or gate == "s"):
+        circuit.s(params)
+    elif (gateString == "T" or gate == "t"):
+        circuit.t(params)
+    elif (gateString == "H" or gate == "h"):
+        circuit.h(params)
     elif (gateString == "CNOT" or gate == "cnot"):
         circuit.cx(params[0], params[1])
     elif (gateString == "M" or gate == "m"):
