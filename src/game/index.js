@@ -1,10 +1,13 @@
 import Phaser from 'phaser';
 import { TestLevel } from './levels/TestLevel';
+import { initSpehere, setState } from '../sphere/sphere';
 
 let currentLevel = null;
 let game = null;
 
 export function startTheGameAlready(parentElement){
+    initSpehere();
+    setState(0, 30, 0);
     game = createPhasorGame(parentElement);
     startLevel(TestLevel);
 }
