@@ -5,7 +5,6 @@ import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catA
 const PRECISION = 3;
 
 export class LevelBase extends Phaser.Scene {
-
     addPlatform(cell_x, cell_y, x_count = 1, y_count = 1) {
         for (let y=0; y<y_count; y++){
             for (let x=0; x<x_count; x++){
@@ -104,6 +103,8 @@ export class LevelBase extends Phaser.Scene {
         this.cellWidth = 50;
         this.cellHeight = 50;
         this.createBackground();
+        this.createTimerText();
+        this.createStateText();
         // open bacgrkound after timer
         // setTimeout(() => this.openTheBox(), 1000);
 
@@ -116,6 +117,29 @@ export class LevelBase extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         console.log(this);
+    }
+
+    createTimerText(){
+        this.timer = this.add.text(960 - 100, 5, '', { fontFamily: 'Roboto', fill: '#25FF1B' });
+    }
+
+    createStateText(){
+        this.state = this.add.text(this.worldCenterX, 5, '', { fontFamily: 'Roboto', fill: '#25FF1B' });
+    }
+
+    updateStateText(first, second){
+        this.state.setText(first + "|0> " + second + "|1> ");
+    }
+
+    updateTimer(timeRemainingInSeconds){
+        if (timeRemainingInSeconds < 30){
+            this.timer.style.setFill("#E5053B");
+        }
+
+        var minutes = Math.floor(timeRemainingInSeconds / 60);
+        var seconds = timeRemainingInSeconds - minutes * 60;
+
+        this.timer.setText(minutes + ":" + seconds);
     }
 
     createBackground(){

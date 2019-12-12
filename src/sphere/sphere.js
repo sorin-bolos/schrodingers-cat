@@ -17,7 +17,12 @@ export function initSpehere() {
         renderer = new THREE.CanvasRenderer({ alpha: true });
     }
 
-    renderer.setSize("300", "150");
+    var w = screen.width;
+    var h = screen.height;
+    var r = w / h;
+    var rw = 300;
+    var rh = 300 / r;
+    renderer.setSize(rw.toString(), rh.toString());
     document.getElementById("stateSphere").appendChild(renderer.domElement);
 
     var material = new THREE.MeshBasicMaterial({ color: 0xFF5733 });
