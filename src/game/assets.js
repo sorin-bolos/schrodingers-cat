@@ -6,8 +6,8 @@ export const boxSprite = 'box';
 export const catSprite = 'cat';
 
 export const gateImages = {
-    T: 'gate_t',
-    H: 'gate_h'
+    T: 't',
+    H: 'h'
 };
 
 export const catAtlasImage = "cat_atlas_image";
@@ -26,14 +26,14 @@ export const backgroundOpenAnim = "background_open_anim";
 let openAnimationImages;
 
 export function preloadGameAssets(load){
-    load.setBaseURL(baseURL);
-    load.image(boxSprite, 'temp-box.png');
+    load.setBaseURL(baseURL); 
+    load.image(boxSprite, 'crate_blue.png');
     load.spritesheet(catSprite, 'temp-cat.png', { 
         frameWidth: 50, 
         frameHeight: 50 }
     );
-    load.image(gateImages.T, 'gate-t.png');
-    load.image(gateImages.H, 'gate-h.png');
+    load.image(gateImages.T, 't.png');
+    load.image(gateImages.H, 'h.png');
     load.atlas(catAtlasImage, 'cat-atlas.png', 'cat-atlas.json');
 
     // background
