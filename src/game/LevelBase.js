@@ -49,6 +49,18 @@ export class LevelBase extends Phaser.Scene {
         this._addGateGeneric(x, y, gateImages.H, 'H');
     }
 
+    addGateX(x,y){
+        this._addGateGeneric(x, y, gateImages.X, 'X');
+    }
+
+    addGateY(x,y){
+        this._addGateGeneric(x, y, gateImages.Y, 'Y');
+    }
+
+    addGateZ(x,y){
+        this._addGateGeneric(x, y, gateImages.Z, 'Z');
+    }
+
     _addGateGeneric(cell_x,cell_y,image,type){
         const gate = this.physics.add.sprite(
             this._cellXToWorldX(cell_x), 

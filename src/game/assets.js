@@ -7,7 +7,10 @@ export const catSprite = 'cat';
 
 export const gateImages = {
     T: 't',
-    H: 'h'
+    H: 'h',
+    X: 'x',
+    Y: 'y',
+    Z: 'z',
 };
 
 export const catAtlasImage = "cat_atlas_image";
@@ -34,6 +37,9 @@ export function preloadGameAssets(load){
     );
     load.image(gateImages.T, 't.png');
     load.image(gateImages.H, 'h.png');
+    load.image(gateImages.X, 'x.png');
+    load.image(gateImages.Y, 'y.png');
+    load.image(gateImages.Z, 'z.png');
     load.atlas(catAtlasImage, 'cat-atlas.png', 'cat-atlas.json');
 
     // background
