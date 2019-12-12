@@ -23,6 +23,43 @@ class Ket {
                                       .reduce((v1, v2) => v1.concat(v2));
         return new Ket(tensored);
     } 
+
+    sphereAngleCoordinates() {
+        const polarA = this.amplitudes[0].toPolar();
+        const polarB = this.amplitudes[1].toPolar();
+
+        const aphi = polarB.phi - polarA.phi;
+        const ateta = math.acos(polarA) / 2;
+        const atetaB = math.asin(polarB) / 2
+
+        if (atetaB.toFixed(PRECISION) == ateta.toFixed(PRECISION))
+        {
+            console.log("OK")
+        }
+        else
+        {
+            console.log("Warning: teta = " + ateta + " <> " + atetaB)
+        }
+
+        return {
+            phi: aphi,
+            teta: ateta
+        };
+    }
+
+    sphereCarthesianCoordinates() {
+        const sphereCoord = sphereAngleCoordinates();
+
+        const ax = math.sin(sphereCoord.teta) * math.cos(sphereCoord.phi);
+        const ay = math.sin(sphereCoord.teta) * math.sin(sphereCoord.phi);
+        const az = math.cos(sphereCoord.teta);
+
+        return {
+            x: ax,
+            y: ay,
+            z: az
+        }
+    }
 }
 
 const Zero = new Ket([1, 0]);
