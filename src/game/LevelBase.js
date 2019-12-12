@@ -30,7 +30,7 @@ export class LevelBase extends Phaser.Scene {
         sprite.setCollideWorldBounds(true);
         sprite.play(catAnim.idle);
         this.physics.add.collider(sprite, this.platforms);
-        this.physics.add.collider(sprite, this.cats);
+        this.physics.add.collider(sprite, this.cats.map(cat => cat.sprite));
 
         const cat = {
             sprite,
@@ -101,6 +101,8 @@ export class LevelBase extends Phaser.Scene {
 
     create() {
         this.simulator = new QiskitSimulator();
+        this.tickCount = 0;
+        this.deadline = 120*60;
 
         createGameAnimations(this.anims);
         this.cats = [];
@@ -210,6 +212,19 @@ export class LevelBase extends Phaser.Scene {
     }
 
     update() {
+        this._updateTimer();
+        this._updateCats();
+    }
+
+    _updateTimer(){
+        this.tickCount++;
+        this.updateTimer(Math.max(0,Math.round((this.deadline - this.tickCount) / 60)));
+        if (this.tickCount > this.deadline && !this.boxHasBeenOpened){
+            this.openTheBox();
+        }
+    }
+
+    _updateCats(){
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
             this.catControlIndex++;
             if (this.catControlIndex >= this.cats.length){
