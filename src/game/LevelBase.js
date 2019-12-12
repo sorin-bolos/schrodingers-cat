@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { preloadGameAssets, createGameAnimations, boxSprite, catSprite, catLeftAnim, catRightAnim, catIdleAnim, gateImages } from './assets';
+import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages } from './assets';
 
 export class LevelBase extends Phaser.Scene {
 
@@ -10,10 +10,13 @@ export class LevelBase extends Phaser.Scene {
     }    
 
     addCat(x,y){
-        const cat = this.physics.add.sprite(x, y, catSprite);
+        const cat = this.physics.add.sprite(x, y, catAtlasImage, "cat_default");
+        cat.setScale(.5,.5);
+        cat.setSize(90,70);
+        cat.setOffset(51,70);
         cat.setBounce(0.2);
         cat.setCollideWorldBounds(true);
-        cat.play(catIdleAnim);
+        cat.play(catAnim.idle);
         this.physics.add.collider(cat, this.boxes);
         this.physics.add.collider(cat, this.cats);
         this.cats.push(cat);
@@ -30,6 +33,8 @@ export class LevelBase extends Phaser.Scene {
     _addGateGeneric(x,y,image,type){
         const gate = this.physics.add.sprite(x,y, image);
         gate.setCollideWorldBounds(true);
+        gate.setScale(.5,.5);
+        gate.setSize(50,50);
         this.physics.add.collider(gate, this.boxes);
         this.physics.add.overlap(gate, this.cats, (gate, cat) => this._collectGate(gate, type), null, this);
     }
@@ -39,8 +44,7 @@ export class LevelBase extends Phaser.Scene {
         this.collectedGates.push({
             gate: type,
             params: [this.catControlIndex],
-        })
-        console.log(this.collectedGates);
+        });
     }
 
     preload() {
@@ -61,6 +65,7 @@ export class LevelBase extends Phaser.Scene {
         //  arrow keys input
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        console.log(this);
     }
 
     update() {
@@ -79,27 +84,48 @@ export class LevelBase extends Phaser.Scene {
     }
 
     _updateControlledCat(cat){
+        const catSpeed = 300;
+        const catJumpStrength = 330;
+        const grounded = cat.body.touching.down;
+        let moving = false;
+
         if (this.cursors.left.isDown) {
-            cat.setVelocityX(-160);
-            cat.anims.play(catLeftAnim, true);
+            cat.setVelocityX(-catSpeed);
+            cat.setFlipX(true);
+            moving = true;
         }
         else if (this.cursors.right.isDown) {
-            cat.setVelocityX(160);
-            cat.anims.play(catRightAnim, true);
+            cat.setVelocityX(+catSpeed);
+            cat.setFlipX(false);
+            moving = true;
         }
         else {
             cat.setVelocityX(0);
-            cat.play(catIdleAnim);
         }
         if (this.cursors.up.isDown && cat.body.touching.down) {
-            cat.setVelocityY(-330);
+            cat.setVelocityY(-catJumpStrength);
+        }
+        if (grounded){
+            if (moving){
+                cat.anims.play(catAnim.run, true);
+            } else {
+                cat.play(catAnim.idle, true);
+            }
+        }
+        else {
+            if (cat.body.velocity.y < -100){
+                cat.anims.play(catAnim.jump, true);
+            }
+            if (cat.body.velocity.y > 100){
+                cat.anims.play(catAnim.fall);
+            }
         }
     }
 
     _updatePassiveCat(cat){
         if (cat.body.touching.down){
             cat.setVelocityX(0);
-            cat.play(catIdleAnim);
+            cat.play(catAnim.idle);
         }
     }
 }

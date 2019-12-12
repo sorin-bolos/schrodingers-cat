@@ -31,6 +31,7 @@ function createPhasorGame(parentElement){
         type: Phaser.AUTO,
         width: 960,
         height: 540,
+        backgroundColor: '#f3cca3',
         scale: {
             mode: Phaser.Scale.ScaleModes.FIT
         },
