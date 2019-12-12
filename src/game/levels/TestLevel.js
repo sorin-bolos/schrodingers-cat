@@ -22,7 +22,6 @@ export class TestLevel extends LevelBase
         this.addPlatform(-9, -1, 1, 10);
         
         this.addCat(-1,0,initialState);
-        this.addCat(1,2,initialState);
         this.addGateZ(-8,-5);
         this.addGateH(8,-9);
     }

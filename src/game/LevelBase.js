@@ -238,6 +238,7 @@ export class LevelBase extends Phaser.Scene {
             {
                 cat.alive = false;
             }
+            _setLife(cat);
             console.log(cat.alive ? "cat is alive" : "cat is dead");
         });
 

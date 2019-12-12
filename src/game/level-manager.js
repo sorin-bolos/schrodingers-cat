@@ -1,5 +1,7 @@
 import { TestLevel } from "./levels/TestLevel";
 import { TestLevel2 } from "./levels/TestLevel2";
+import { TestLevel3 } from "./levels/TestLevel3";
+import { TestLevel4 } from "./levels/TestLevel4";
 import { addLevelFinishListener } from "./LevelBase";
 
 let currentlevelIndex = 0;
@@ -13,7 +15,9 @@ function startFirstLevel(){
 function getLevelClassByIndex(index){
     const levelSequence = [
         TestLevel,
-        TestLevel2
+        TestLevel2,
+        TestLevel3,
+        TestLevel4
     ];
     return levelSequence[index];
 }
