@@ -1,8 +1,11 @@
 import { LevelBase } from "../LevelBase";
+import { Ket, Plus, Zero, One } from '../../quantum/ket';
 
 export class TestLevel extends LevelBase
 {
     create(){
+        const initialState = Plus;
+
         super.create();
 
         // level floor
@@ -18,8 +21,8 @@ export class TestLevel extends LevelBase
         // walls 
         this.addPlatform(-9, -1, 1, 10);
         
-        this.addCat(-1,0);
-        this.addCat(1,2);
+        this.addCat(-1,0,initialState);
+        this.addCat(1,2,initialState);
         this.addGateT(-8,-5);
         this.addGateH(8,-9);
     }

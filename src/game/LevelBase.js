@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
+import { QiskitSimulator } from '../quantum/qiskitSimulator';
 import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages, backgroundImageStatic, backgroundOpenAnim, backgroundSchrodinger } from './assets';
+
+const PRECISION = 3;
 
 export class LevelBase extends Phaser.Scene {
 
@@ -14,22 +17,28 @@ export class LevelBase extends Phaser.Scene {
         }
     }    
 
-    addCat(cell_x, cell_y){
-        const cat = this.physics.add.sprite(
+    addCat(cell_x, cell_y, initialState){
+        const sprite = this.physics.add.sprite(
             this._cellXToWorldX(cell_x), 
             this._cellYToWorldY(cell_y),
             catAtlasImage, 
             "cat_default");
+        
+        sprite.setScale(.5,.5);
+        sprite.setSize(90,70);
+        sprite.setOffset(51,70);
+        sprite.setBounce(0.2);
+        sprite.setCollideWorldBounds(true);
+        sprite.play(catAnim.idle);
+        this.physics.add.collider(sprite, this.platforms);
+        this.physics.add.collider(sprite, this.cats);
 
-        cat.setScale(.5,.5);
-        cat.setSize(90,70);
-        cat.setOffset(51,70);
-        cat.setBounce(0.2);
-        cat.setCollideWorldBounds(true);
-        cat.play(catAnim.idle);
+        const cat = {
+            sprite,
+            state: initialState,
+            alive: true
+        }
 
-        this.physics.add.collider(cat, this.platforms);
-        this.physics.add.collider(cat, this.cats);
         this.cats.push(cat);
     }
     
@@ -50,7 +59,7 @@ export class LevelBase extends Phaser.Scene {
         gate.setScale(.5,.5);
         gate.setSize(50,50);
         this.physics.add.collider(gate, this.platforms);
-        this.physics.add.overlap(gate, this.cats, (gate, cat) => this._collectGate(gate, type), null, this);
+        this.physics.add.overlap(gate, this.cats.map(cat => cat.sprite), (gate, cat) => this._collectGate(gate, type), null, this);
     }
 
     _collectGate(gate, type){
@@ -62,13 +71,26 @@ export class LevelBase extends Phaser.Scene {
             gate: type,
             params: [this.catControlIndex],
         });
+        this._beginSimulate(this.cats[this.catControlIndex], type);
     }
 
+    async _beginSimulate(cat, type){
+        cat.state = await this.simulator.apply({ name: type}, cat.state);
+        cat.state.amplitudes.forEach(element => {
+            if (element.toPolar().r.toFixed(PRECISION) == 1)
+            {
+                this.openTheBox();
+            }
+        });
+    }
+    
     preload() {
         preloadGameAssets(this.load);
     }
 
     create() {
+        this.simulator = new QiskitSimulator();
+
         createGameAnimations(this.anims);
         this.cats = [];
         this.collectedGates = [];
@@ -121,6 +143,8 @@ export class LevelBase extends Phaser.Scene {
             onComplete: () => inspect()
         });
 
+        this._beginMeasure();
+
         const inspect = () => {
             const scale = Math.random()*.2+.7;
             this.tweens.add({
@@ -136,6 +160,19 @@ export class LevelBase extends Phaser.Scene {
         }
     }
 
+    async _beginMeasure() {
+        const promises = this.cats.map(async (cat) => {
+            cat.state = await this.simulator.apply({ name: "M"}, cat.state);
+            if (cat.state.amplitudes[0].toPolar().r.toFixed(PRECISION) == 1)
+            {
+                cat.alive = false;
+            }
+            console.log(cat.alive ? "cat is alive" : "cat is dead");
+        });
+
+        await Promise.all(promises);
+    }
+
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
             this.catControlIndex++;
@@ -144,56 +181,56 @@ export class LevelBase extends Phaser.Scene {
             }
         }
         for(let i=0; i<this.cats.length; i++){
-            const cat = this.cats[i];
+            const catSprite = this.cats[i].sprite;
             (i == this.catControlIndex && !this.boxHasBeenOpened)
-                ? this._updateControlledCat(cat)
-                : this._updatePassiveCat(cat);
+                ? this._updateControlledCatSprite(catSprite)
+                : this._updatePassiveCatSprite(catSprite);
         }
     }
 
-    _updateControlledCat(cat){
+    _updateControlledCatSprite(sprite){
         const catSpeed = 300;
         const catJumpStrength = 330;
-        const grounded = cat.body.touching.down;
+        const grounded = sprite.body.touching.down;
         let moving = false;
         
         if (this.cursors.left.isDown) {
-            cat.setVelocityX(-catSpeed);
-            cat.setFlipX(true);
+            sprite.setVelocityX(-catSpeed);
+            sprite.setFlipX(true);
             moving = true;
         }
         else if (this.cursors.right.isDown) {
-            cat.setVelocityX(+catSpeed);
-            cat.setFlipX(false);
+            sprite.setVelocityX(+catSpeed);
+            sprite.setFlipX(false);
             moving = true;
         }
         else {
-            cat.setVelocityX(0);
+            sprite.setVelocityX(0);
         }
-        if (this.cursors.up.isDown && cat.body.touching.down) {
-            cat.setVelocityY(-catJumpStrength);
+        if (this.cursors.up.isDown && sprite.body.touching.down) {
+            sprite.setVelocityY(-catJumpStrength);
         }
         if (grounded){
             if (moving){
-                cat.anims.play(catAnim.run, true);
+                sprite.anims.play(catAnim.run, true);
             } else {
-                cat.play(catAnim.idle, true);
+                sprite.play(catAnim.idle, true);
             }
         }
         else {
-            if (cat.body.velocity.y < -100){
-                cat.anims.play(catAnim.jump, true);
+            if (sprite.body.velocity.y < -100){
+                sprite.anims.play(catAnim.jump, true);
             }
-            if (cat.body.velocity.y > 100){
-                cat.anims.play(catAnim.fall);
+            if (sprite.body.velocity.y > 100){
+                sprite.anims.play(catAnim.fall);
             }
         }
     }
 
-    _updatePassiveCat(cat){
-        if (cat.body.touching.down){
-            cat.setVelocityX(0);
-            cat.play(catAnim.idle);
+    _updatePassiveCatSprite(sprite){
+        if (sprite.body.touching.down){
+            sprite.setVelocityX(0);
+            sprite.play(catAnim.idle);
         }
     }
 
