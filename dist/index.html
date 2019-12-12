@@ -4,14 +4,24 @@
     <title>Schrodingers Cat</title>
     <style>
       html, body { margin:0; padding:0 }
+      #stateSphere{z-index: 40000; position: absolute;}
     </style>
   </head>
   <body>
     <script src="main.js"></script>
+    <script src="three.js"></script>
+    <script src="sphere.js"></script>
+    <div id="stateSphere"></div>
     <main></main>
     <nav>
       <button class="fullscreen">Fullscreen</button>
       <button class="restart">Restart Level</button>
     </nav>
+
+     <script>
+        initSpehere();
+        document.setState(0, 30, 0);
+      </script>
+
   </body>
 </html>
