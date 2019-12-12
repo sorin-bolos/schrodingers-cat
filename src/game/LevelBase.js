@@ -5,6 +5,7 @@ import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catA
 const PRECISION = 3;
 
 export class LevelBase extends Phaser.Scene {
+
     addPlatform(cell_x, cell_y, x_count = 1, y_count = 1) {
         for (let y=0; y<y_count; y++){
             for (let x=0; x<x_count; x++){
@@ -145,7 +146,7 @@ export class LevelBase extends Phaser.Scene {
         this.state.setText(first + "|0> " + second + "|1> ");
     }
 
-    updateTimer(timeRemainingInSeconds){
+    updateTimerText(timeRemainingInSeconds){
         if (timeRemainingInSeconds < 30){
             this.timer.style.setFill("#E5053B");
         }
@@ -213,14 +214,23 @@ export class LevelBase extends Phaser.Scene {
 
     update() {
         this._updateTimer();
+        this._updateLevel();
         this._updateCats();
     }
 
     _updateTimer(){
         this.tickCount++;
-        this.updateTimer(Math.max(0,Math.round((this.deadline - this.tickCount) / 60)));
+        this.updateTimerText(Math.max(0,Math.round((this.deadline - this.tickCount) / 60)));
         if (this.tickCount > this.deadline && !this.boxHasBeenOpened){
             this.openTheBox();
+        }
+    }
+
+    _updateLevel(){
+        if (this.boxHasBeenOpened && Phaser.Input.Keyboard.JustDown(this.spacebar)){
+            const firstDeadCat = this.cats.find(cat => !cat.alive);
+            const allCatsAreAlive = firstDeadCat == null;
+            notifyFinishLevel(allCatsAreAlive);
         }
     }
 
@@ -300,3 +310,12 @@ export class LevelBase extends Phaser.Scene {
     }
 }
 
+const levelFinishedListeners = [];
+
+function notifyFinishLevel(allCatsAreAlive){
+    levelFinishedListeners.forEach(listener => listener(allCatsAreAlive));
+}
+
+export function addLevelFinishListener(listener){
+    levelFinishedListeners.push(listener);
+}

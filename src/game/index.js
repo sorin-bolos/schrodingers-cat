@@ -1,26 +1,20 @@
 import Phaser from 'phaser';
 import { TestLevel } from './levels/TestLevel';
 import { initSpehere, setState } from '../sphere/sphere';
+import { TestLevel2 } from './levels/TestLevel2';
+import levelManager from './level-manager';
 
-let currentLevel = null;
 let game = null;
 
 export function startTheGameAlready(parentElement){
     initSpehere();
     setState(0, 30, 0);
     game = createPhasorGame(parentElement);
-    startLevel(TestLevel);
+    levelManager.setGame(game);
+    levelManager.startFirstLevel();
 }
 
-export function restartLevel(){
-    game.scene.remove("level");
-    game.scene.add("level", currentLevel, true);
-}
-
-function startLevel(LevelClass){
-    currentLevel = LevelClass;
-    restartLevel();
-}
+export const restartLevel = levelManager.restartLevel;
 
 export function toggleFullscreen() {
     game.scale.isFullScreen 
