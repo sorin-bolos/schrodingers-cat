@@ -18,6 +18,7 @@ The level ends when:
        1. You are no longer in a superposition but in a defined state. If you are in the state |ALIVE> you pass the level. If you are in the state |DEAD> you fail.
        2. The time ends. If you are still in a superposition when the time ends and Dr. Schrodinger looks in the box your state colapses randomly to either |DEAD> or |ALIVE>. If you are in luck and you get the state alive you can pass the level. If not you fail. 
 
+*Once the level has ended **press space** to pass to the next level or restart the level*
 
 ## Installation
 
