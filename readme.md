@@ -35,7 +35,7 @@ Run `pip install qiskit` to install Qiskit
 
 Run `pip install flask` to install Flask
 
-Run `pip install flask_restfull` to install Flask Restfull
+Run `pip install flask_restful` to install Flask Restfull
 
 Run `pip install flask_cors` to install Flas Cors
 
