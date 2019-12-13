@@ -238,7 +238,7 @@ export class LevelBase extends Phaser.Scene {
             {
                 cat.alive = false;
             }
-            _setLife(cat);
+            this._setLife(cat);
             console.log(cat.alive ? "cat is alive" : "cat is dead");
         });
 
@@ -345,7 +345,7 @@ export class LevelBase extends Phaser.Scene {
     _setLife(cat) {
         const coordinates = cat.state.sphereCarthesianCoordinates();
         console.log(coordinates);
-        setState(coordinates.x*-50, coordinates.z*-50, coordinates.y*-50);
+        setState(coordinates.x*-50, coordinates.z*50, coordinates.y*-50);
 
         this.updateStateText(cat.state.amplitudes[0], cat.state.amplitudes[1]);
     }
