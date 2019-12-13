@@ -45,6 +45,8 @@ Run `python backend/schrody_server.py` to start the server. This will launch the
 ### Run the client
 Open a command prompt and navigate to the main working folder.
 
+Run `npm install` to install dependencies.
+
 Run `npm start`
 
 The game should start in a new browser tab
