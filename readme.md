@@ -29,17 +29,23 @@ Clone or download the sources.
 
 ### Installing the server
 
-Open a command prompt in an environment that has to Python 3.7 installed. 
+Open a command prompt in an environment that has to Python 3.7 installed.
+
 Run `pip install qiskit` to install Qiskit
+
 Run `pip install flask` to install Flask
+
 Run `pip install flask_restfull` to install Flask Restfull
+
 Run `pip install flask_cors` to install Flas Cors
 
-Navigate to the working folder
+Navigate to the working folder.
 Run `python backend/schrody_server.py` to start the server. This will launch the server on "http://localhost:5000". Make sure the port is open.
 
 ### Run the client
 Open a command prompt and navigate to the main working folder.
+
 Run `npm start`
+
 The game should start in a new browser tab
 
