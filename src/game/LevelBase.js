@@ -240,6 +240,17 @@ export class LevelBase extends Phaser.Scene {
             }
             this._setLife(cat);
             console.log(cat.alive ? "cat is alive" : "cat is dead");
+
+            const endText1 = cat.alive ? "You are alive!" : "You are dead";
+            const endText2 = cat.alive ? "Press space for next level" : "Press space to retry";
+            let endLevelText1 = this.add.text(this.worldCenterX - 200, 200, '', 
+            { fontFamily: 'Roboto', fill: '#E74C3C', textAlign: 'center', allign:'center',
+             fontSize: 40});
+             let endLevelText2 = this.add.text(this.worldCenterX - 250, 250, '', 
+            { fontFamily: 'Roboto', fill: '#E74C3C', textAlign: 'center', allign:'center',
+             fontSize: 40});
+            endLevelText1.setText(endText1);
+            endLevelText2.setText(endText2);
         });
 
         await Promise.all(promises);
