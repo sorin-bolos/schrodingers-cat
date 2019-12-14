@@ -24,7 +24,10 @@ export function initSpehere() {
     var rh = 150;
     var rw = rh * r;
     renderer.setSize(rw.toString(), rh.toString());
-    document.getElementById("stateSphere").appendChild(renderer.domElement);
+    const elem = document.getElementById("stateSphere")
+    elem.style.marginLeft = (-27 * r) + "px";
+    elem.appendChild(renderer.domElement);
+    
 
     var material = new THREE.MeshBasicMaterial({ color: 0xFF5733 });
 

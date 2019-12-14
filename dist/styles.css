@@ -11,16 +11,13 @@ html, body {
 
 .main {
     z-index: 1;
-    position: relative;
+    float: right;
 }
 
 #stateSphere {
     z-index: 4;
-    position: relative;
-    margin-bottom: -170px;
-    margin-left: -60px;
+    position: absolute;
     float: left;
-    margin-top: 10px;
 }
 
 .main-header {
@@ -44,4 +41,8 @@ html, body {
 
 .container {
     padding: 0 1.5em;
+}
+
+.restart {
+    
 }
