@@ -2,21 +2,29 @@
 <html>
   <head>
     <title>Schrodingers Cat</title>
-    <style>
-      html, body { margin:0; padding:0 }
-      #stateSphere{z-index: 40000; position: absolute;}
-    </style>
+    <link rel="stylesheet" href=styles.css />
   </head>
   <body>
     <script src="https://pagecdn.io/lib/three/109/three.min.js"></script>
     <script src="main.js"></script>
+    
+    <header class="main-header">
+      <br>
+      <h1 class="title">Schrody</h1>
+      <br>
+      
+    </header>
 
-    <div id="stateSphere"></div>
-    <main></main>
-    <nav>
-      <button class="fullscreen">Fullscreen</button>
-      <button class="restart">Restart Level</button>
-    </nav>
+    <div class="content-section">
+      <div class="container">
+        <div id="stateSphere"></div>
+        <main class="main"></main>
+        <nav>
+          <!-- <button class="fullscreen">Fullscreen</button> -->
+          <button class="restart">Restart Level</button>
+        </nav>
+      </div>
+    </div>
     
   </body>
 </html>

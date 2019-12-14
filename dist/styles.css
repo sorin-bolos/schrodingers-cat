@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    font-family: Helvetica;
+    color: #333;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    z-index: 1;
+    position: relative;
+}
+
+#stateSphere {
+    z-index: 4;
+    position: relative;
+    margin-bottom: -170px;
+    margin-left: -60px;
+    float: left;
+    margin-top: 10px;
+}
+
+.main-header {
+    margin: 0;
+    background-color: rosybrown;
+    padding-bottom: 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: 40;
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.content-section {
+    margin: 1em auto;
+    text-align: center;
+    max-width: 900px;
+}
+
+.container {
+    padding: 0 1.5em;
+}

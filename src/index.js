@@ -6,7 +6,7 @@ async function initializeGame(){
     const canvas = document.querySelector("main")
 
     const buttons = {
-        "button.fullscreen": () => game.toggleFullscreen(),
+        //"button.fullscreen": () => game.toggleFullscreen(),
         "button.restart": () => game.restartLevel(),
     };
     
