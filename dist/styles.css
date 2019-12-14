@@ -7,6 +7,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color: #D4EFDF;
 }
 
 .main {
@@ -22,7 +23,6 @@ html, body {
 
 .main-header {
     margin: 0;
-    background-color: rosybrown;
     padding-bottom: 30px;
 }
 
@@ -36,7 +36,7 @@ html, body {
 .content-section {
     margin: 1em auto;
     text-align: center;
-    max-width: 900px;
+    max-width: 900px;;
 }
 
 .container {
@@ -44,5 +44,14 @@ html, body {
 }
 
 .restart {
-    
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
