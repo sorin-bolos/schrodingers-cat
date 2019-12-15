@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import { QiskitSimulator } from '../quantum/qiskitSimulator';
+import { InstantSimulator } from '../quantum/instantSimulator';
+import { X, Y, Z, H, S, Sdg, T, Tdg } from '../quantum/operator';
 import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages, backgroundImageStatic, backgroundOpenAnim, backgroundSchrodinger } from './assets';
 import { setState } from '../sphere/sphere';
 import { updateTickCount, getTickCount, resetTickCount, setDeadLine, getDeadLine} from './timer'
@@ -45,40 +47,40 @@ export class LevelBase extends Phaser.Scene {
 
         this._setLife(cat);
     }
-    
-    addGateT(x,y){
-        this._addGateGeneric(x, y, gateImages.T, 'T');
-    }
 
     addGateH(x,y){
-        this._addGateGeneric(x, y, gateImages.H, 'H');
+        this._addGateGeneric(x, y, gateImages.H, H);
     }
 
     addGateX(x,y){
-        this._addGateGeneric(x, y, gateImages.X, 'X');
+        this._addGateGeneric(x, y, gateImages.X, X);
     }
 
     addGateY(x,y){
-        this._addGateGeneric(x, y, gateImages.Y, 'Y');
+        this._addGateGeneric(x, y, gateImages.Y, Y);
     }
 
     addGateZ(x,y){
-        this._addGateGeneric(x, y, gateImages.Z, 'Z');
+        this._addGateGeneric(x, y, gateImages.Z, Z);
     }
 
     addGateS(x,y){
-        this._addGateGeneric(x, y, gateImages.S, 'S');
+        this._addGateGeneric(x, y, gateImages.S, S);
     }
 
     addGateSdag(x,y){
-        this._addGateGeneric(x, y, gateImages.Sdag, 'Sdg');
+        this._addGateGeneric(x, y, gateImages.Sdag, Sdg);
+    }
+    
+    addGateT(x,y){
+        this._addGateGeneric(x, y, gateImages.T, T);
     }
 
     addGateTdag(x,y){
-        this._addGateGeneric(x, y, gateImages.Tdag, 'Tdg');
+        this._addGateGeneric(x, y, gateImages.Tdag, Tdg);
     }
 
-    _addGateGeneric(cell_x,cell_y,image,type){
+    _addGateGeneric(cell_x,cell_y,image, operator){
         const gate = this.physics.add.sprite(
             this._cellXToWorldX(cell_x), 
             this._cellYToWorldY(cell_y),
@@ -87,23 +89,23 @@ export class LevelBase extends Phaser.Scene {
         gate.setScale(.5,.5);
         gate.setSize(50,50);
         this.physics.add.collider(gate, this.platforms);
-        this.physics.add.overlap(gate, this.cats.map(cat => cat.sprite), (gate, cat) => this._collectGate(gate, type), null, this);
+        this.physics.add.overlap(gate, this.cats.map(cat => cat.sprite), (gate, cat) => this._collectGate(gate, operator), null, this);
     }
 
-    _collectGate(gate, type){
+    _collectGate(gate, operator){
         if (this.boxHasBeenOpened){
             return;
         }
         gate.disableBody(true, true);
         this.collectedGates.push({
-            gate: type,
+            gate: operator.name,
             params: [this.catControlIndex],
         });
-        this._beginSimulate(this.cats[this.catControlIndex], type);
+        this._beginSimulate(this.cats[this.catControlIndex], operator);
     }
 
-    async _beginSimulate(cat, type){
-        cat.state = await this.simulator.apply({ name: type}, cat.state);
+    async _beginSimulate(cat, operator){
+        cat.state = await this.simulator.apply(operator, cat.state);
         this._setLife(cat);
         cat.state.amplitudes.forEach(element => {
             if (element.toPolar().r.toFixed(PRECISION) == 1)
@@ -118,7 +120,7 @@ export class LevelBase extends Phaser.Scene {
     }
 
     create() {
-        this.simulator = new QiskitSimulator();
+        this.simulator = new InstantSimulator();
         resetTickCount();
         setDeadLine(120*60);
 
@@ -151,7 +153,6 @@ export class LevelBase extends Phaser.Scene {
         //  arrow keys input
         this.cursors = this.input.keyboard.createCursorKeys();
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        console.log(this);
     }
 
     createTimerText(){
@@ -233,7 +234,7 @@ export class LevelBase extends Phaser.Scene {
 
     async _beginMeasure() {
         const promises = this.cats.map(async (cat) => {
-            cat.state = await this.simulator.apply({ name: "M"}, cat.state);
+            cat.state = await this.simulator.measure(cat.state);
             if (cat.state.amplitudes[0].toPolar().r.toFixed(PRECISION) == 1)
             {
                 cat.alive = false;
@@ -357,7 +358,6 @@ export class LevelBase extends Phaser.Scene {
 
     _setLife(cat) {
         const coordinates = cat.state.sphereCarthesianCoordinates();
-        console.log(coordinates);
         setState(coordinates.x*-50, coordinates.z*50, coordinates.y*-50);
 
         this.updateStateText(cat.state.amplitudes[0], cat.state.amplitudes[1]);

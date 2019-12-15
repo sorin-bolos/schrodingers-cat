@@ -13,32 +13,27 @@ class InstantSimulator {
             throw `Cannot apply operator of size ${operatorSize} to ket of size ${ketSize}`;
 
         let newElements = math.multiply(operator.matrix, ket.amplitudes);
-        return new k.Ket(newElements);
+        return Promise.resolve(new k.Ket(newElements));
     }
 
-    I(ket) {
-        return this.apply(o.I, ket);
-    }
+    measure(ket) {
+        let newAmplitudes = new Array(ket.amplitudes.length).fill(0);
+        const rand = math.random();
 
-    X(ket) {
-        return this.apply(o.X, ket);
-    }
+        let threshold = 0;
+        for(let i = 0; i < ket.amplitudes.length; i++)
+        {
+            const element = ket.amplitudes[i];
+            const probability = math.multiply(element, element.conjugate()).re;
+            threshold += probability;
 
-    Y(ket) {
-        return this.apply(o.Y, ket);
-    }
+            if (rand <= threshold) {
+                newAmplitudes[i] = 1;
+                return Promise.resolve(new k.Ket(newAmplitudes));
+            }
+        }
 
-    Z(ket) {
-        return this.apply(o.Z, ket);
-    }
-
-    H(ket) {
-        return this.apply(o.Z, ket);
-    }
-
-    CNOT(contrloKet, targetKet) {
-        let tensor = contrloKet.tensor(targetKet);
-        return this.apply(o.CNOT, tensor);
+        throw "Sum of probabilities should be 1";
     }
 }
 

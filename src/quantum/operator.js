@@ -37,7 +37,10 @@ const X = new Operator([[0, 1], [1, 0]], "X");
 const Y = new Operator([[0, "0+i"], ["0-i", 0]], "Y");
 const Z = new Operator([[1, 0], [0, -1]], "Z");
 const H = new Operator([[1/math.sqrt(2), 1/math.sqrt(2)], [1/math.sqrt(2), -1/math.sqrt(2)]], "H");
-const M = new Operator([[1/math.sqrt(2), 1/math.sqrt(2)], [1/math.sqrt(2), -1/math.sqrt(2)]], "M");
+const S = new Operator([[1, 0], [0, "0+i"]], "S");
+const Sdg = new Operator([[1, 0], [0, "0-i"]], "Sdag");
+const T = new Operator([[1, 0], [0, 1/math.sqrt(2) + "+" + 1/math.sqrt(2) + "i"]], "T");
+const Tdg = new Operator([[1, 0], [0, 1/math.sqrt(2) + "-" + 1/math.sqrt(2) + "i"]], "Tdag");
 const CNOT = new Operator([[1, 0, 0, 0],
                            [0, 1, 0, 0],
                            [0, 0, 0, 1],
@@ -50,6 +53,9 @@ module.exports = {
     Y,
     Z,
     H,
-    M,
+    S,
+    Sdg,
+    T,
+    Tdg,
     CNOT
 }

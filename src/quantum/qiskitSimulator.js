@@ -36,38 +36,12 @@ class QiskitSimulator {
         .then((res) => res.json())
         .then((data) => {
             let amplitudes = data.outputState.map(s => s.replace("j", "i"));
-            console.log(data);
             return new k.Ket(amplitudes)
         } )
     }
 
-    I(ket) {
-        return this.apply(o.I, ket);
-    }
-
-    X(ket) {
-        return this.apply(o.X, ket);
-    }
-
-    Y(ket) {
-        return this.apply(o.Y, ket);
-    }
-
-    Z(ket) {
-        return this.apply(o.Z, ket);
-    }
-
-    H(ket) {
-        return this.apply(o.H, ket);
-    }
-
-    M(ket) {
-        return this.apply(o.M, ket);
-    }
-
-    CNOT(contrloKet, targetKet) {
-        let tensor = contrloKet.tensor(targetKet);
-        return this.apply(o.CNOT, tensor);
+    measure(ket) {
+        return this.apply({name: 'M'}, ket);
     }
 }
 
