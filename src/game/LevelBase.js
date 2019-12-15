@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { QiskitSimulator } from '../quantum/qiskitSimulator';
 import { preloadGameAssets, createGameAnimations, boxSprite, catAtlasImage, catAnim, gateImages, backgroundImageStatic, backgroundOpenAnim, backgroundSchrodinger } from './assets';
 import { setState } from '../sphere/sphere';
+import { updateTickCount, getTickCount, resetTickCount, setDeadLine, getDeadLine} from './timer'
 
 const PRECISION = 3;
 
@@ -118,8 +119,8 @@ export class LevelBase extends Phaser.Scene {
 
     create() {
         this.simulator = new QiskitSimulator();
-        this.tickCount = 0;
-        this.deadline = 120*60;
+        resetTickCount();
+        setDeadLine(120*60);
 
         createGameAnimations(this.anims);
         this.cats = [];
@@ -128,7 +129,6 @@ export class LevelBase extends Phaser.Scene {
 
         this.boxHasBeenOpened = false;
 
-        
         this.worldCenterX = 960/2;
         this.worldCenterY = 540/2;
         this.cellWidth = 50;
@@ -263,9 +263,11 @@ export class LevelBase extends Phaser.Scene {
     }
 
     _updateTimer(){
-        this.tickCount++;
-        this.updateTimerText(Math.max(0,Math.round((this.deadline - this.tickCount) / 60)));
-        if (this.tickCount > this.deadline && !this.boxHasBeenOpened){
+        updateTickCount();
+        const tickCount = getTickCount();
+        const deadline = getDeadLine();
+        this.updateTimerText(Math.max(0,Math.round((deadline - tickCount) / 60)));
+        if (tickCount > deadline && !this.boxHasBeenOpened){
             this.openTheBox();
         }
     }

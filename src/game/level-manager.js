@@ -46,7 +46,7 @@ function setGame(phasorGame){
 export default {
     setGame,
     restartLevel,
-    startFirstLevel,
+    startFirstLevel
 }
 
 addLevelFinishListener(finishCurrentLevel);

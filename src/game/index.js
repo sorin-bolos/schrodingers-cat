@@ -1,8 +1,7 @@
 import Phaser from 'phaser';
-import { TestLevel } from './levels/TestLevel';
 import { initSpehere, setState } from '../sphere/sphere';
-import { TestLevel2 } from './levels/TestLevel2';
 import levelManager from './level-manager';
+import { endTime } from './timer';
 
 let game = null;
 
@@ -16,6 +15,10 @@ export function startTheGameAlready(parentElement){
 
 export const restartLevel = levelManager.restartLevel;
 
+export function forceTimerEnd() {
+    endTime();
+}
+
 export function toggleFullscreen() {
     game.scale.isFullScreen 
         ? game.scale.stopFullscreen()
@@ -23,7 +26,7 @@ export function toggleFullscreen() {
         ;
 }
 
-function createPhasorGame(parentElement){
+function createPhasorGame(parentElement) {
     return new Phaser.Game({
         type: Phaser.AUTO,
         width: 960,

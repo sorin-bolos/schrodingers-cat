@@ -8,6 +8,7 @@ async function initializeGame(){
     const buttons = {
         //"button.fullscreen": () => game.toggleFullscreen(),
         "button.restart": () => game.restartLevel(),
+        "button.forceTimerEnd": () => game.forceTimerEnd(),
     };
     
     registerButtons(buttons);
