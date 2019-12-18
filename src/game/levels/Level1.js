@@ -1,7 +1,7 @@
 import { LevelBase } from "../LevelBase";
 import { Ket, Plus, Zero, One } from '../../quantum/ket';
 
-export class TestLevel extends LevelBase
+export class Level1 extends LevelBase
 {
     create(){
         const initialState = Plus;

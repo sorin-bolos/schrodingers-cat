@@ -1,13 +1,13 @@
-import { TestLevel } from "./levels/TestLevel";
-import { TestLevel2 } from "./levels/TestLevel2";
-import { TestLevel3 } from "./levels/TestLevel3";
-import { TestLevel4 } from "./levels/TestLevel4";
-import { TestLevel5 } from "./levels/TestLevel5";
-import { TestLevel6 } from "./levels/TestLevel6";
-import { TestLevel7 } from "./levels/TestLevel7";
-import { TestLevel8 } from "./levels/TestLevel8";
-import { TestLevel9 } from "./levels/TestLevel9";
-import { TestLevel10 } from "./levels/TestLevel10";
+import { Level1 } from "./levels/Level1";
+import { Level2 } from "./levels/Level2";
+import { Level3 } from "./levels/Level3";
+import { Level4 } from "./levels/Level4";
+import { Level5 } from "./levels/Level5";
+import { Level6 } from "./levels/Level6";
+import { Level7 } from "./levels/Level7";
+import { Level8 } from "./levels/Level8";
+import { Level9 } from "./levels/Level9";
+import { Level10 } from "./levels/Level10";
 import { Level11 } from "./levels/Level11";
 import { Level12 } from "./levels/Level12";
 import { Level13 } from "./levels/Level13";
@@ -26,16 +26,16 @@ function startFirstLevel(){
 
 function getLevelClassByIndex(index){
     const levelSequence = [
-        TestLevel,
-        TestLevel2,
-        TestLevel3,
-        TestLevel4,
-        TestLevel5,
-        TestLevel6,
-        TestLevel7,
-        TestLevel8,
-        TestLevel9,
-        TestLevel10,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+        Level10,
         Level11,
         Level12,
         Level13,
