@@ -12,18 +12,18 @@ export class Level3 extends LevelBase
         this.addPlatform(-10, 5, 20);
 
         // additional platforms
-        this.addPlatform(3, 3, 4);
-        this.addPlatform(-5, 1, 8);
-        this.addPlatform(-9, -1, 3);
-        this.addPlatform(7, -1, 3);
+        this.addPlatform(0, 1, 3);
+        this.addPlatform(-4, 3, 3);
+        this.addPlatform(-6, 1, 1);
+        this.addPlatform(-8, -1, 2);
         this.addPlatform(-5, -3, 10);
+        this.addPlatform(5, -1, 5);
 
         // walls 
-        this.addPlatform(-9, -1, 1, 10);
         
         this.addCat(-1,0,initialState);
         this.addGateS(-8,-5);
         this.addGateZ(8,-9);
-        this.addGateH(0,-9);
+        this.addGateH(1,-2);
     }
 }

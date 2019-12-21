@@ -8,21 +8,27 @@ export class Level4 extends LevelBase
         super.create();
 
         // level floor
-        this.addPlatform(-10, 5, 20);
+        this.addPlatform(-10, 5, 21);
 
         // additional platforms
-        this.addPlatform(3, 3, 4);
-        this.addPlatform(-5, 1, 8);
-        this.addPlatform(-9, -1, 3);
-        this.addPlatform(7, -1, 3);
-        this.addPlatform(-5, -3, 10);
+        this.addPlatform(-8, 3, 16);
+        this.addPlatform(-7, 1, 16);
+        this.addPlatform(-8, -1, 16);
+        this.addPlatform(-8, -5, 17);
 
         // walls 
-        this.addPlatform(-9, -1, 1, 10);
+        this.addPlatform(-9, -5, 1, 10);
+        this.addPlatform(-10, -5, 1, 10);
+        this.addPlatform(9, -5, 1, 10);
+        this.addPlatform(10, -5, 1, 10);
         
         this.addCat(-1,0,initialState);
-        this.addGateT(-8,-5);
-        this.addGateS(8,-9);
-        this.addGateH(0,-9);
+        this.addGateT(-8,4);
+        this.addGateX(0,4);
+        this.addGateH(-7,-3);
+        this.addGateS(3,-3);
+        this.addGateX(0,-3);
+
+        //TSH
     }
 }
