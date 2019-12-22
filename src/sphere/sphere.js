@@ -1,10 +1,10 @@
 var scene;
 var stateLine;
 
-export function initSpehere() {
+export function initSpehere(size) {
     scene = new THREE.Scene();
 
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+    var camera = new THREE.PerspectiveCamera(45, 1, 1, 500);
     camera.position.set(0, 100, 120);
     camera.lookAt(0, 0, 0);
 
@@ -17,15 +17,9 @@ export function initSpehere() {
         renderer = new THREE.CanvasRenderer({ alpha: true });
     }
 
-    var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientHeight;
-    var r = w / h;
-    
-    var rh = 150;
-    var rw = rh * r;
-    renderer.setSize(rw.toString(), rh.toString());
+    renderer.setSize(size.toString(), size.toString());
     const elem = document.getElementById("stateSphere")
-    elem.style.marginLeft = (-27 * r) + "px";
+    elem.style.margin = 10 + "px";
     elem.appendChild(renderer.domElement);
     
 

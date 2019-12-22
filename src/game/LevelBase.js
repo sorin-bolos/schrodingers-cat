@@ -181,7 +181,7 @@ export class LevelBase extends Phaser.Scene {
             second.re = parseFloat(second.re).toFixed(3);
         if (second.im)
             second.im = parseFloat(second.im).toFixed(3);
-        this.state.setText("[ " + first + " |DEAD> " +"                 "+ second + " |ALIVE> ]");
+        this.state.setText(first + " |DEAD> " +"                 "+ second + " |ALIVE>");
     }
 
     updateTimerText(timeRemainingInSeconds){
