@@ -5,6 +5,7 @@ export class Level2 extends LevelBase
 {
     create(){
         const initialState = new Ket([1/Math.sqrt(2), 1/Math.sqrt(2) + "i"]);
+        this.name = "Level 2";
 
         super.create();
 

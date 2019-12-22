@@ -10,13 +10,13 @@ const PRECISION = 3;
 
 export class LevelBase extends Phaser.Scene {
 
-    addPlatform(cell_x, cell_y, x_count = 1, y_count = 1) {
+    addPlatform(cell_x, cell_y, x_count = 1, y_count = 1, platformSprite = boxSprite) {
         for (let y=0; y<y_count; y++){
             for (let x=0; x<x_count; x++){
                 this.platforms.create(
                     this._cellXToWorldX(cell_x + x), 
                     this._cellYToWorldY(cell_y + y), 
-                    boxSprite);
+                    platformSprite);
             }
         }
     }    
@@ -138,6 +138,7 @@ export class LevelBase extends Phaser.Scene {
         this.createBackground();
         this.createTimerText();
         this.createStateText();
+        this.createLevelNameText();
 
         //DEBUG
         //setState(1*-50, 0*50, 0*-50);
@@ -156,12 +157,16 @@ export class LevelBase extends Phaser.Scene {
     }
 
     createTimerText(){
-        this.timer = this.add.text(820, 20, '', { fontFamily: 'Roboto', fill: '#2c3e50' });
+        this.timer = this.add.text(820, 40, '', { fontFamily: 'Roboto', fill: '#2c3e50' });
         this.timer.setFontSize(25);
     }
 
     createStateText(){
         this.state = this.add.text(this.worldCenterX - 170, 7, '', { fontFamily: 'Roboto', fill: '#34495e' });
+    }
+
+    createLevelNameText() {
+        this.add.text(800, 7, this.name, { fontFamily: 'Roboto', fill: '#E5053B', fontSize: 30 });
     }
 
     updateStateText(_first, _second){

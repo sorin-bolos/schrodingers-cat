@@ -1,30 +1,34 @@
 import { LevelBase } from "../LevelBase";
 import { Ket, Plus, Zero, One } from '../../quantum/ket';
+import { boxSpriteRed } from '../assets';
 
 export class Level11 extends LevelBase
 {
     create(){
         const initialState = new Ket(["0.924", "-0.383"]);
+        this.name = "Level 11";
+
         super.create();
 
         // level floor
-        this.addPlatform(-10, 5, 20);
+        this.addPlatform(-10, 5, 21, 1, boxSpriteRed);
 
         // additional platforms
-        this.addPlatform(3, 3, 4);
-        this.addPlatform(-5, 1, 8);
-        this.addPlatform(-9, -1, 3);
-        this.addPlatform(7, -1, 3);
-        this.addPlatform(-5, -3, 10);
+        this.addPlatform(-4, 0, 9, 4, boxSpriteRed);
+        this.addPlatform(-5, 3, 1, 1, boxSpriteRed);
+        this.addPlatform(-10, 1, 2, 1, boxSpriteRed);
+        this.addPlatform(9, -2, 2, 1, boxSpriteRed);
+        this.addPlatform(-4, -3, 9, 1, boxSpriteRed);
 
-        // walls 
-        this.addPlatform(-9, -1, 1, 10);
+        // walls
         
-        this.addCat(-1,0,initialState);
+        this.addCat(-1, -3,initialState);
         this.addGateH(-8,-5);
         this.addGateS(8,-9);
         this.addGateH(0,-9);
-        this.addGateS(0,0);
-        this.addGateT(-2,2);
+        this.addGateS(1,-3);
+        this.addGateT(-3,-3);
+
+        //SHTSH
     }
 }

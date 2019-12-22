@@ -3,6 +3,8 @@
 const baseURL = '/assets';
 
 export const boxSprite = 'box';
+export const boxSpriteRed = 'boxRed';
+export const boxSpriteGreen = 'boxGreen';
 export const catSprite = 'cat';
 
 export const gateImages = {
@@ -34,6 +36,8 @@ let openAnimationImages;
 export function preloadGameAssets(load){
     load.setBaseURL(baseURL); 
     load.image(boxSprite, 'crate_blue.png');
+    load.image(boxSpriteRed, 'crate_red.png');
+    load.image(boxSpriteGreen, 'crate_green.png');
     load.spritesheet(catSprite, 'temp-cat.png', { 
         frameWidth: 50, 
         frameHeight: 50 }

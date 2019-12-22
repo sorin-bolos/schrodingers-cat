@@ -5,6 +5,7 @@ export class Level1 extends LevelBase
 {
     create(){
         const initialState = Plus;
+        this.name = "Level 1";
 
         super.create();
 
