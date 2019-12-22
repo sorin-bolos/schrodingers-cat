@@ -10,8 +10,6 @@ export function startTheGameAlready(parentElement){
     levelManager.setGame(game);
     levelManager.startFirstLevel();
     
-    console.log("aaa");
-    console.log(game.scale);
     initSpehere(150 / game.scale.displayScale.x);
     setState(0, 30, 0);
 }
