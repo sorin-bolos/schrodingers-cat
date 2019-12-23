@@ -3,3 +3,17 @@
     position: absolute;
     float: left;
 }
+
+#mainNav.navbar-shrink-always {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+  #mainNav.navbar-shrink-always .navbar-brand {
+    font-size: 1.5em;
+}
+
+header.masthead-custom {
+    padding-top: 130px;
+    background: url("./themes/freelancer/img/bg-pattern.png"), #1abc9c;
+    background: url("./themes/freelancer/img/bg-pattern.png"), linear-gradient(to left, #0b725d, #69a599);
+  }
