@@ -19,6 +19,20 @@
 
     <!-- Custom CSS-->
     <link href="styles.css" rel="stylesheet">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
   </head>
   <body id="page-top">
@@ -36,14 +50,14 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#story">Game Story</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#howtoplay">How to Play</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#gates">Gates</a>
             </li>
-            <li class="nav-item mx-0 mx-lg-1">
+            <!-- <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -53,19 +67,19 @@
     <header class="masthead masthead-custom bg-primary text-white text-center">
       <div class="container h-100">
         <div class="row h-100">
-          <div class="col-lg-8 my-auto">
+          <div class="col-lg-9 my-auto">
             <div class="schrody-container">
               <div id="stateSphere"></div>
               <main class="main"></main>
               <nav>
                 <!-- <button class="fullscreen">Fullscreen</button> -->
-                <button class="button restart">Restart Level</button>
-                <button class="button forceTimerEnd">End Time</button>
+                <button class="button btn btn-secondary restart">Restart Level</button>
+                <button class="button btn btn-secondary forceTimerEnd">End Time</button>
               </nav>
             </div>
           </div>
-          <div class="col-lg-4 my-auto">
-            <h3>Schrody</h3>
+          <div class="col-lg-3 my-auto">
+            <h2>Schrody</h2>
             <p>You are Schrody, Schrodinger's cat. You have been put in a box by your master for an experiment. Now you are in a superposition - half dead half alive. You must remain alive and be 100% alive when your master opens the box to see the result of his experiment.
 
               In the box there are some quantum gates and you must use them to transition from the superposition state to the |ALIVE> state. However, if you are still in a suprposition when Dr. Schrodinger opens the box, you still have a random chance (depending on the suerposition) of remaining alive and passing to the next level.</p>
@@ -74,8 +88,8 @@
       </div>
     </header>
 
-    <!-- About Section -->
-    <section class="page-section text-secondary mb-0" id="about">
+    <!-- How to play Section -->
+    <section class="page-section text-secondary mb-0" id="howtoplay">
       <div class="container">
 
         <!-- About Section Heading -->
@@ -98,7 +112,12 @@
             <p class="lead">In the box there are several quantum gates. Each time you collect a gate your superposition changes accordingly. The goal is to transition, using the quantum gates, from the superposition state to the |ALIVE> state (|1>).</p>
           </div>
           <div class="col-lg-6 mr-auto">
-            <p class="lead">The level ends when: 1. You are no longer in a superposition but in a defined state. If you are in the state |ALIVE> you pass the level. If you are in the state |DEAD> you fail. 2. The time ends. If you are still in a superposition when the time ends and Dr. Schrodinger looks in the box your state colapses randomly to either |DEAD> or |ALIVE>. If you are in luck and you get the state alive you can pass the level. If not you fail.</p>
+            <p class="lead">The level ends when: </p>
+              <ol class="lead"> 
+                <li> You are no longer in a superposition but in a defined state. If you are in the state |ALIVE> you pass the level. If you are in the state |DEAD> you fail.</li>
+                <li> The time ends. If you are still in a superposition when the time ends and Dr. Schrodinger looks in the box your state colapses randomly to either |DEAD> or |ALIVE>. If you are in luck and you get the state alive you can pass the level. If not you fail.</li>
+              </ol>
+            </p>
             </br>
             <p class="lead">Once the level has ended press space to pass to the next level or restart the level</p>
           </div>
@@ -107,8 +126,8 @@
       </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section class="page-section bg-primary text-white portfolio" id="portfolio">
+    <!-- Gates Section -->
+    <section class="page-section bg-primary text-white portfolio" id="gates">
       <div class="container">
 
         <!-- Portfolio Section Heading -->
@@ -200,7 +219,7 @@
 
           <!-- Portfolio Item 7 -->
           <div class="col-md-3 col-lg-3">
-            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
+            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal7">
               <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                 <div class="portfolio-item-caption-content text-center">
                   <i class="fas fa-plus fa-3x"></i>
@@ -212,7 +231,7 @@
 
           <!-- Portfolio Item 8 -->
           <div class="col-md-3 col-3">
-            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
+            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal8">
               <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                 <div class="portfolio-item-caption-content text-center">
                   <i class="fas fa-plus fa-3x"></i>
@@ -251,7 +270,7 @@
             <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">X Gate</h2>
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Pauli X Gate</h2>
                 <!-- Icon Divider -->
                 <div class="divider-custom">
                   <div class="divider-custom-line"></div>
@@ -263,7 +282,9 @@
                 <!-- Portfolio Modal - Image -->
                 <img class="img-fluid rounded mb-8 modal-image" src="./themes/freelancer/img/XgateImg.png" alt="">
                 <!-- Portfolio Modal - Text -->
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <p class="mb-5">The Pauli X gate has the matrix representation \begin{bmatrix}0 & 1\\1 & 0\end{bmatrix}</p>
+                <p class="mb-5">Its efect is to swap the coeficients of the state vector: $a|0\rangle + b|1\rangle$ becomes $b|0\rangle + a|1\rangle$</p>
+                <p class="mb-5">On the Bloch sphere this corresponds to a rotation arround the X axis of $\pi \ \mathrm{rad}$ ($180^\circ$) </p>
                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                   <i class="fas fa-times fa-fw"></i>
                   Close Window
@@ -290,7 +311,7 @@
             <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Tasty Cake</h2>
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Pauli Y Gate</h2>
                 <!-- Icon Divider -->
                 <div class="divider-custom">
                   <div class="divider-custom-line"></div>
@@ -300,9 +321,10 @@
                   <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/cake.png" alt="">
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/YgateImg.png" alt="">
                 <!-- Portfolio Modal - Text -->
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <p class="mb-5">The Pauli Y gate has the matrix representation \begin{bmatrix}0 & -i\\i & 0\end{bmatrix}</p>
+                <p class="mb-5">On the Bloch sphere this corresponds to a rotation arround the Y axis of $\pi \ \mathrm{rad}$ ($180^\circ$) </p>
                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                   <i class="fas fa-times fa-fw"></i>
                   Close Window
@@ -329,7 +351,7 @@
             <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Circus Tent</h2>
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Pauly Z Gate</h2>
                 <!-- Icon Divider -->
                 <div class="divider-custom">
                   <div class="divider-custom-line"></div>
@@ -339,9 +361,11 @@
                   <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/circus.png" alt="">
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/ZgateImg.png" alt="">
                 <!-- Portfolio Modal - Text -->
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <p class="mb-5">The Pauli Z gate has the matrix representation \begin{bmatrix}1 & 0\\0 & -1\end{bmatrix}</p>
+                <p class="mb-5">Its efect is to change the sign of the $|1\rangle$ component: $a|0\rangle + b|1\rangle$ becomes $a|0\rangle - b|1\rangle$</p>
+                <p class="mb-5">On the Bloch sphere this corresponds to a rotation arround the Z axis of $\pi \ \mathrm{rad}$ ($180^\circ$) </p>
                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                   <i class="fas fa-times fa-fw"></i>
                   Close Window
@@ -368,7 +392,7 @@
             <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Controller</h2>
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">The Hadamard Gate</h2>
                 <!-- Icon Divider -->
                 <div class="divider-custom">
                   <div class="divider-custom-line"></div>
@@ -378,9 +402,11 @@
                   <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/game.png" alt="">
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/HgateImg.png" alt="">
                 <!-- Portfolio Modal - Text -->
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <p class="mb-5">The Hadamard gate has the matrix representation $ \frac{1}{ \sqrt{2} } \begin{bmatrix}1 & 1\\1 & -1\end{bmatrix}$</p>
+                <p class="mb-5">It us used pimarily to create or destry superpositions</p>
+                <p class="mb-5">On the Bloch sphere applying it corresponds to a rotation of $\pi \ \mathrm{rad}$ arround an axis in the XZ plane that passes througn the origin and is angled at $45^\circ$ relative to the X and Z axes.</p>
                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                   <i class="fas fa-times fa-fw"></i>
                   Close Window
@@ -407,7 +433,7 @@
             <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Locked Safe</h2>
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">The S Gate</h2>
                 <!-- Icon Divider -->
                 <div class="divider-custom">
                   <div class="divider-custom-line"></div>
@@ -417,9 +443,10 @@
                   <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/safe.png" alt="">
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/SgateImg.png" alt="">
                 <!-- Portfolio Modal - Text -->
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <p class="mb-5">The S gate has the matrix representation $ \begin{bmatrix}1 & 0\\0 & i\end{bmatrix}$</p>
+                <p class="mb-5">On the Bloch sphere applying it corresponds to a rotation of $\frac{\pi}{2} \ \mathrm{rad}$ arround the Z axis.</p>
                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                   <i class="fas fa-times fa-fw"></i>
                   Close Window
@@ -434,7 +461,124 @@
 
   <!-- Portfolio Modal 6 -->
   <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
-    
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="fas fa-times"></i>
+          </span>
+        </button>
+        <div class="modal-body text-center">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Title -->
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">The T Gate</h2>
+                <!-- Icon Divider -->
+                <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="divider-custom-line"></div>
+                </div>
+                <!-- Portfolio Modal - Image -->
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/TgateImg.png" alt="">
+                <!-- Portfolio Modal - Text -->
+                <p class="mb-5">The T gate has the matrix representation $ \begin{bmatrix}1 & 0\\0 & e^{i \pi/4}\end{bmatrix}$</p>
+                <p class="mb-5">On the Bloch sphere applying it corresponds to a rotation of $\frac{\pi}{4} \ \mathrm{rad}$ arround the Z axis.</p>
+                <button class="btn btn-primary" href="#" data-dismiss="modal">
+                  <i class="fas fa-times fa-fw"></i>
+                  Close Window
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 7 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal7" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="fas fa-times"></i>
+          </span>
+        </button>
+        <div class="modal-body text-center">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Title -->
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">The S Dagger Gate</h2>
+                <!-- Icon Divider -->
+                <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="divider-custom-line"></div>
+                </div>
+                <!-- Portfolio Modal - Image -->
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/SdagGateImg.png" alt="">
+                <!-- Portfolio Modal - Text -->
+                <p class="mb-5">The S dagger gate has the matrix representation $ \begin{bmatrix}1 & 0\\0 & -i\end{bmatrix}$</p>
+                <p class="mb-5">On the Bloch sphere applying it corresponds to a rotation of $-\frac{\pi}{2} \ \mathrm{rad}$ arround the Z axis.</p>
+                <button class="btn btn-primary" href="#" data-dismiss="modal">
+                  <i class="fas fa-times fa-fw"></i>
+                  Close Window
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Modal 8 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal8" tabindex="-1" role="dialog" aria-labelledby="portfolioModal6Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="fas fa-times"></i>
+          </span>
+        </button>
+        <div class="modal-body text-center">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Title -->
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">The T Dagger Gate</h2>
+                <!-- Icon Divider -->
+                <div class="divider-custom">
+                  <div class="divider-custom-line"></div>
+                  <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="divider-custom-line"></div>
+                </div>
+                <!-- Portfolio Modal - Image -->
+                <img class="img-fluid rounded mb-5 modal-image" src="./themes/freelancer/img/TdagGateImg.png" alt="">
+                <!-- Portfolio Modal - Text -->
+                <p class="mb-5">The T dagger gate has the matrix representation $ \begin{bmatrix}1 & 0\\0 & e^{-i \pi/4}\end{bmatrix}$</p>
+                <p class="mb-5">On the Bloch sphere applying it corresponds to a rotation of $-\frac{\pi}{4} \ \mathrm{rad}$ arround the Z axis.</p>
+                <button class="btn btn-primary" href="#" data-dismiss="modal">
+                  <i class="fas fa-times fa-fw"></i>
+                  Close Window
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <!-- Bootstrap core JavaScript -->
     <script src="themes/freelancer/vendor/jquery/jquery.min.js"></script>
     <script src="themes/freelancer/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

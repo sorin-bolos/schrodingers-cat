@@ -10,7 +10,7 @@ export function startTheGameAlready(parentElement){
     levelManager.setGame(game);
     levelManager.startFirstLevel();
     
-    initSpehere(150 / game.scale.displayScale.x);
+    initSpehere(180 / game.scale.displayScale.x);
     setState(0, 30, 0);
 }
 
