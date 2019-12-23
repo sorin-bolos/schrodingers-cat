@@ -26,7 +26,7 @@ describe('Operator', function() {
       });
 
       describe('#Y()', function() {
-        it('Y should rotate arround the y axis', function() {
+        it('Y should rotate around the y axis', function() {
           let simulator = new s.InstantSimulator();
           let a = 0.5;
           let b = (math.sqrt(3)/2).toFixed(3);
