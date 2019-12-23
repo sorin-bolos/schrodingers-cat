@@ -17,3 +17,38 @@ header.masthead-custom {
     background: url("./themes/freelancer/img/bg-pattern.png"), #1abc9c;
     background: url("./themes/freelancer/img/bg-pattern.png"), linear-gradient(to left, #0b725d, #69a599);
   }
+
+  .portfolio .portfolio-item {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    max-width: 25rem;
+    margin-bottom: 30px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .portfolio .portfolio-item .portfolio-item-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgba(26, 188, 156, 0.9);
+  }
+  
+  .portfolio .portfolio-item .portfolio-item-caption:hover {
+    opacity: 1;
+    color: rgba(26, 188, 156, 0.9);
+  }
+  
+  .portfolio .portfolio-item .portfolio-item-caption .portfolio-item-caption-content {
+    font-size: 1.5rem;
+    color: rgba(26, 188, 156, 0.9);
+  }
+
+  .modal-image {
+      max-width: 100px;
+      margin-bottom: 20px;
+  }
