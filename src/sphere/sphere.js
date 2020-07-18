@@ -1,5 +1,5 @@
 var scene;
-var stateLine;
+var stateLine1, stateLine2, stateLine3, stateLine4;
 
 export function initSpehere(size) {
     scene = new THREE.Scene();
@@ -28,8 +28,7 @@ export function initSpehere(size) {
     var radius = 50;
 
     var sGeometry = new THREE.SphereGeometry(radius, 32, 32);
-    //var sMaterial = new THREE.MeshDepthMaterial({color: 0xFFDAD2, transparent: true, wireframe: true, wireframeLinewidth: 0});
-    var sMaterial = new THREE.MeshBasicMaterial({ color: 0x979A9A, transparent: true, wireframe: true, wireframeLinewidth: 0 });
+    var sMaterial = new THREE.MeshBasicMaterial({ color: 0x979A9A, opacity: 0.3, transparent: true, wireframe: true });
     var sphere = new THREE.Mesh(sGeometry, sMaterial);
     scene.add(sphere);
 
@@ -101,14 +100,44 @@ export function initSpehere(size) {
 }
 
  export function setState(x, y, z) {
-    if (stateLine) {
-        scene.remove(stateLine);
+    if (stateLine1) {
+        scene.remove(stateLine1);
+    }
+    if (stateLine2) {
+        scene.remove(stateLine2);
+    }
+    if (stateLine3) {
+        scene.remove(stateLine3);
+    }
+    if (stateLine4) {
+        scene.remove(stateLine4);
     }
 
-    var stateLineMaterial = new THREE.LineBasicMaterial({ color: 0x74FE48, linewidth: 8, linecap: 'round', linejoin: 'round' });
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(0, 0, 0));
-    geometry.vertices.push(new THREE.Vector3(x, y, z));
-    stateLine = new THREE.Line(geometry, stateLineMaterial);
-    scene.add(stateLine);
+    var stateLineMaterial1 = new THREE.LineBasicMaterial({ color: 0x74FE48, linewidth: 1, linecap: 'round', linejoin: 'round' });
+    var geometry1 = new THREE.Geometry();
+    geometry1.vertices.push(new THREE.Vector3(0, 0, 0));
+    geometry1.vertices.push(new THREE.Vector3(x, y, z));
+    stateLine1 = new THREE.Line(geometry1, stateLineMaterial1);
+    scene.add(stateLine1);
+
+    var stateLineMaterial2 = new THREE.LineBasicMaterial({ color: 0x74FE48, linewidth: 1, linecap: 'round', linejoin: 'round' });
+    var geometry2 = new THREE.Geometry();
+    geometry2.vertices.push(new THREE.Vector3(1, 0, 0));
+    geometry2.vertices.push(new THREE.Vector3(x+1, y, z));
+    stateLine2 = new THREE.Line(geometry2, stateLineMaterial2);
+    scene.add(stateLine2);
+
+    var stateLineMaterial3 = new THREE.LineBasicMaterial({ color: 0x74FE48, linewidth: 1, linecap: 'round', linejoin: 'round' });
+    var geometry3 = new THREE.Geometry();
+    geometry3.vertices.push(new THREE.Vector3(0, 1, 0));
+    geometry3.vertices.push(new THREE.Vector3(x, y+1, z));
+    stateLine3 = new THREE.Line(geometry3, stateLineMaterial3);
+    scene.add(stateLine3);
+
+    var stateLineMaterial4 = new THREE.LineBasicMaterial({ color: 0x74FE48, linewidth: 1, linecap: 'round', linejoin: 'round' });
+    var geometry4 = new THREE.Geometry();
+    geometry4.vertices.push(new THREE.Vector3(0, 0, 1));
+    geometry4.vertices.push(new THREE.Vector3(x, y, z+1));
+    stateLine4 = new THREE.Line(geometry4, stateLineMaterial4);
+    scene.add(stateLine4);
 }
